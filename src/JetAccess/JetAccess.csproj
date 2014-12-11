@@ -45,17 +45,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IJetFactory.cs" />
+    <Compile Include="IJetService.cs" />
+    <Compile Include="Models\GetOrders\Order.cs" />
+    <Compile Include="Models\GetProducts\Product.cs" />
+    <Compile Include="Models\JetUserCredentials.cs" />
     <Compile Include="Misc\ActionPolicies.cs" />
     <Compile Include="Misc\ExtensionsInternal.cs" />
     <Compile Include="Misc\ExtensionsPublic.cs" />
     <Compile Include="Misc\IManualSerializable.cs" />
     <Compile Include="Misc\PredefinedValues.cs" />
     <Compile Include="Misc\JetLogger.cs" />
+    <Compile Include="Models\Ping\PingInfo.cs" />
+    <Compile Include="Models\UpdateInventory\Inventory.cs" />
+    <Compile Include="JetException.cs" />
+    <Compile Include="JetFactory.cs" />
+    <Compile Include="JetService.cs" />
+    <Compile Include="Services\JetRestService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="Services\" />
+    <Folder Include="Models\Services\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

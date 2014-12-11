@@ -8,31 +8,31 @@ namespace JetAccess.Misc
 {
 	internal static class ActionPolicies
 	{
-		private static readonly ActionPolicy _jetSumbitPolicy = ActionPolicy.Handle< Exception >().Retry( 10, ( ex, i ) =>
+		private static readonly ActionPolicy _jetSumbitPolicy = ActionPolicy.Handle<Exception>().Retry(10, (ex, i) =>
 		{
-			JetLogger.Log().Trace( ex, "Retrying Jet API submit call for the {0} time", i );
-			SystemUtil.Sleep( TimeSpan.FromSeconds( 0.5 + i ) );
-		} );
+			JetLogger.Log().Trace(ex, "Retrying Jet API submit call for the {0} time", i);
+			SystemUtil.Sleep(TimeSpan.FromSeconds(0.5 + i));
+		});
 
-		private static readonly ActionPolicyAsync _jetSumbitAsyncPolicy = ActionPolicyAsync.Handle< Exception >()
-			.RetryAsync( 10, async ( ex, i ) =>
+		private static readonly ActionPolicyAsync _jetSumbitAsyncPolicy = ActionPolicyAsync.Handle<Exception>()
+			.RetryAsync(10, async (ex, i) =>
 			{
-				JetLogger.Log().Trace( ex, "Retrying Jet API submit call for the {0} time", i );
-				await Task.Delay( TimeSpan.FromSeconds( 0.5 + i ) ).ConfigureAwait( false );
-			} );
+				JetLogger.Log().Trace(ex, "Retrying Jet API submit call for the {0} time", i);
+				await Task.Delay(TimeSpan.FromSeconds(0.5 + i)).ConfigureAwait(false);
+			});
 
-		private static readonly ActionPolicy _jetGetPolicy = ActionPolicy.Handle< Exception >().Retry( 10, ( ex, i ) =>
+		private static readonly ActionPolicy _jetGetPolicy = ActionPolicy.Handle<Exception>().Retry(10, (ex, i) =>
 		{
-			JetLogger.Log().Trace( ex, "Retrying Jet API get call for the {0} time", i );
-			SystemUtil.Sleep( TimeSpan.FromSeconds( 0.5 + i ) );
-		} );
+			JetLogger.Log().Trace(ex, "Retrying Jet API get call for the {0} time", i);
+			SystemUtil.Sleep(TimeSpan.FromSeconds(0.5 + i));
+		});
 
-		private static readonly ActionPolicyAsync _jetGetAsyncPolicy = ActionPolicyAsync.Handle< Exception >()
-			.RetryAsync( 10, async ( ex, i ) =>
+		private static readonly ActionPolicyAsync _jetGetAsyncPolicy = ActionPolicyAsync.Handle<Exception>()
+			.RetryAsync(10, async (ex, i) =>
 			{
-				JetLogger.Log().Trace( ex, "Retrying Jet API get call for the {0} time", i );
-				await Task.Delay( TimeSpan.FromSeconds( 0.5 + i ) ).ConfigureAwait( false );
-			} );
+				JetLogger.Log().Trace(ex, "Retrying Jet API get call for the {0} time", i);
+				await Task.Delay(TimeSpan.FromSeconds(0.5 + i)).ConfigureAwait(false);
+			});
 
 		public static ActionPolicy Submit
 		{
