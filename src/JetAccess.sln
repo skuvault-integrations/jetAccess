@@ -10,6 +10,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D8DF11
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JetAccess", "JetAccess\JetAccess.csproj", "{536F69FA-66F1-4144-B1A5-5B362B10CB0A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JetAccessTestsIntegration", "JetAccessTestsIntegration\JetAccessTestsIntegration.csproj", "{19F84928-AD16-4D90-92A2-D4267ABA1335}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JetAccessTests", "JetAccessTests\JetAccessTests.csproj", "{0DDD97A0-B9BE-4410-9551-9C3C3E9CCBA5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +24,14 @@ Global
 		{536F69FA-66F1-4144-B1A5-5B362B10CB0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{536F69FA-66F1-4144-B1A5-5B362B10CB0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{536F69FA-66F1-4144-B1A5-5B362B10CB0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19F84928-AD16-4D90-92A2-D4267ABA1335}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19F84928-AD16-4D90-92A2-D4267ABA1335}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19F84928-AD16-4D90-92A2-D4267ABA1335}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19F84928-AD16-4D90-92A2-D4267ABA1335}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DDD97A0-B9BE-4410-9551-9C3C3E9CCBA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DDD97A0-B9BE-4410-9551-9C3C3E9CCBA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DDD97A0-B9BE-4410-9551-9C3C3E9CCBA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DDD97A0-B9BE-4410-9551-9C3C3E9CCBA5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
