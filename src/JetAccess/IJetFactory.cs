@@ -2,8 +2,8 @@
 
 namespace JetAccess
 {
-	public interface IJetFactory
-	{
-		IJetService CreateService(JetUserCredentials userAuthCredentials);
-	}
+    public interface IJetFactory
+    {
+        IJetService CreateService( JetUserCredentials userAuthCredentials );
+    }
 }
