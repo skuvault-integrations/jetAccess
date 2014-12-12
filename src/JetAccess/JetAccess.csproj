@@ -37,6 +37,10 @@
     <Reference Include="Netco">
       <HintPath>..\packages\Netco.1.4.3\lib\net45\Netco.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NLog">
       <HintPath>..\packages\NLog.3.1.0.0\lib\net45\NLog.dll</HintPath>
     </Reference>
@@ -51,6 +55,7 @@
   <ItemGroup>
     <Compile Include="IJetFactory.cs" />
     <Compile Include="IJetService.cs" />
+    <Compile Include="Misc\ICreateCallInfo.cs" />
     <Compile Include="Models\GetOrders\Order.cs" />
     <Compile Include="Models\GetProducts\Product.cs" />
     <Compile Include="Models\JetUserCredentials.cs" />
@@ -66,8 +71,14 @@
     <Compile Include="JetException.cs" />
     <Compile Include="JetFactory.cs" />
     <Compile Include="JetService.cs" />
+    <Compile Include="Services\IWebRequestService.cs" />
     <Compile Include="Services\JetRestService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Parsers\GetTokenResponseParser.cs" />
+    <Compile Include="Services\Parsers\IResponseParser.cs" />
+    <Compile Include="Services\Parsers\JsonResponseParser.cs" />
+    <Compile Include="Services\Parsers\XmlResponseParser.cs" />
+    <Compile Include="Services\WebRequestServices.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -10,6 +10,7 @@ namespace JetAccessTestsIntegration.Services
     {
         private TestDataReader _testDataReader;
 
+        [ TestFixtureSetUp ]
         public void Setup()
         {
             this._testDataReader = new TestDataReader( @"..\..\Files\UserCredentials.csv" );

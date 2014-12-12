@@ -1,28 +1,31 @@
 ﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("JetAccess")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("JetAccess")]
-[assembly: AssemblyCopyright("Copyright ©  2014")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
+[ assembly : AssemblyTitle( "JetAccess" ) ]
+[ assembly : AssemblyDescription( "" ) ]
+[ assembly : AssemblyConfiguration( "" ) ]
+[ assembly : AssemblyCompany( "" ) ]
+[ assembly : AssemblyProduct( "JetAccess" ) ]
+[ assembly : AssemblyCopyright( "Copyright ©  2014" ) ]
+[ assembly : AssemblyTrademark( "" ) ]
+[ assembly : AssemblyCulture( "" ) ]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
 // COM, set the ComVisible attribute to true on that type.
 
-[assembly: ComVisible(false)]
+[ assembly : ComVisible( false ) ]
+[ assembly : InternalsVisibleTo( "JetAccessTests" ) ]
+[ assembly : InternalsVisibleTo( "JetAccessTestsIntegration" ) ]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 
-[assembly: Guid("8b12aee3-6e61-4e51-bff6-6f540b2cc14e")]
+[ assembly : Guid( "8b12aee3-6e61-4e51-bff6-6f540b2cc14e" ) ]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -35,5 +38,5 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[ assembly : AssemblyVersion( "1.0.0.0" ) ]
+[ assembly : AssemblyFileVersion( "1.0.0.0" ) ]

@@ -8,19 +8,19 @@ using JetAccess.Models.UpdateInventory;
 
 namespace JetAccess
 {
-	public interface IJetService
-	{
-		Func<string> AdditionalLogInfo { get; set; }
-		Task<IEnumerable<Order>> GetOrdersAsync(DateTime dateFrom, DateTime dateTo);
+    public interface IJetService
+    {
+        Func< string > AdditionalLogInfo{ get; set; }
+        Task< IEnumerable< Order > > GetOrdersAsync( DateTime dateFrom, DateTime dateTo );
 
-		Task<IEnumerable<Order>> GetOrdersAsync();
+        Task< IEnumerable< Order > > GetOrdersAsync();
 
-		Task UpdateInventoryAsync(IEnumerable<Inventory> products);
+        Task UpdateInventoryAsync( IEnumerable< Inventory > products );
 
-		Task<IEnumerable<Product>> GetProductsAsync();
+        Task< IEnumerable< Product > > GetProductsAsync();
 
-		Task<PingInfo> Ping();
+        Task< PingInfo > Ping();
 
-		Task<IEnumerable<Order>> GetOrdersAsync(params string[] docNumbers);
-	}
+        Task< IEnumerable< Order > > GetOrdersAsync( params string[] docNumbers );
+    }
 }

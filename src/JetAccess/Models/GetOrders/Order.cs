@@ -1,6 +1,6 @@
 ﻿namespace JetAccess.Models.GetOrders
 {
-	public class Order
-	{
-	}
+    public class Order
+    {
+    }
 }

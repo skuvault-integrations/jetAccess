@@ -1,7 +1,6 @@
 ﻿namespace JetAccessTestsIntegration
 {
-	public class JetSerice
-	{
-		 
-	}
+    public class JetSerice
+    {
+    }
 }

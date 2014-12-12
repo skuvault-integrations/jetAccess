@@ -1,6 +1,6 @@
 ﻿namespace JetAccess.Models.GetProducts
 {
-	public class Product
-	{
-	}
+    public class Product
+    {
+    }
 }

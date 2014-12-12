@@ -1,6 +1,6 @@
 ﻿namespace JetAccess.Models.UpdateInventory
 {
-	public class Inventory
-	{
-	}
+    public class Inventory
+    {
+    }
 }

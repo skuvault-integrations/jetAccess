@@ -1,6 +1,6 @@
 ﻿namespace JetAccess.Models.Ping
 {
-	public class PingInfo
-	{
-	}
+    public class PingInfo
+    {
+    }
 }

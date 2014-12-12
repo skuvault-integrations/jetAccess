@@ -1,7 +1,7 @@
 namespace Jet.Misc
 {
-	internal interface IManualSerializable
-	{
-		string ToJson();
-	}
+    internal interface IManualSerializable
+    {
+        string ToJson();
+    }
 }
