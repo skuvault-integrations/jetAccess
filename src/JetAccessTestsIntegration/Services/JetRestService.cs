@@ -29,5 +29,19 @@ namespace JetAccessTestsIntegration.Services
             //------------ Assert
             task.Result.Token.Should().NotBeNullOrWhiteSpace();
         }
+
+        [Test]
+        public void GetOrders_PasswordsAndConnectionAreGood_OrderIdsReceived()
+        {
+            //------------ Arrange
+            var service = new JetRestService(_testDataReader.GetJetUserCredentials);
+
+            //------------ Act
+            var task = service.GetOrderUrlsAsync();
+            task.Wait();
+
+            //------------ Assert
+            task.Result.OrderUrls.Should().HaveCount(x => x > 0);
+        }
     }
 }

@@ -66,6 +66,7 @@
     <Compile Include="Misc\PredefinedValues.cs" />
     <Compile Include="Misc\JetLogger.cs" />
     <Compile Include="Models\Ping\PingInfo.cs" />
+    <Compile Include="Models\Services\JetRestService\GetOrderIds\GetOrderUrlsResponse.cs" />
     <Compile Include="Models\Services\JetRestService\GetToken\GetTokenResponse.cs" />
     <Compile Include="Models\UpdateInventory\Inventory.cs" />
     <Compile Include="JetException.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Services\IWebRequestService.cs" />
     <Compile Include="Services\JetRestService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Parsers\GetOrderUrlsResponseParser.cs" />
     <Compile Include="Services\Parsers\GetTokenResponseParser.cs" />
     <Compile Include="Services\Parsers\IResponseParser.cs" />
     <Compile Include="Services\Parsers\JsonResponseParser.cs" />
