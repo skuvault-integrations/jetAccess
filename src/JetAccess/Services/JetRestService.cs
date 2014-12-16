@@ -6,8 +6,8 @@ using CuttingEdge.Conditions;
 using Jet.Misc;
 using JetAccess.Misc;
 using JetAccess.Models;
-using JetAccess.Models.GetOrderWithOutShipmentDetail;
 using JetAccess.Models.Services.JetRestService.GetOrderIds;
+using JetAccess.Models.Services.JetRestService.GetOrderWithOutShipmentDetail;
 using JetAccess.Models.Services.JetRestService.GetToken;
 using JetAccess.Services.Parsers;
 

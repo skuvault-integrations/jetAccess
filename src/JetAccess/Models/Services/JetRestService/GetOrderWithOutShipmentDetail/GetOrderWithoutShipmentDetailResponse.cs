@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace JetAccess.Models.GetOrderWithOutShipmentDetail
+namespace JetAccess.Models.Services.JetRestService.GetOrderWithOutShipmentDetail
 {
     internal class GetOrderWithoutShipmentDetailResponse
     {

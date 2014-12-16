@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using JetAccess.Models.GetOrderWithOutShipmentDetail;
+using JetAccess.Models.Services.JetRestService.GetOrderWithOutShipmentDetail;
 using Newtonsoft.Json;
 
 namespace JetAccess.Services.Parsers
@@ -50,12 +50,12 @@ namespace JetAccess.Services.Parsers
                     OrderPlacedDate = deserializeObject.order_placed_date,
                     OrderTransmitionDate = deserializeObject.order_transmission_date,
                     Created = deserializeObject.status,
-                    OrderItems = new List< Models.GetOrderWithOutShipmentDetail.OrderItem >(),
+                    OrderItems = new List< Models.Services.JetRestService.GetOrderWithOutShipmentDetail.OrderItem >(),
                 };
 
                 for( var i = 0; i < deserializeObject.order_items.Count(); i++ )
                 {
-                    var item = new Models.GetOrderWithOutShipmentDetail.OrderItem
+                    var item = new Models.Services.JetRestService.GetOrderWithOutShipmentDetail.OrderItem
                     {
                         OrderItemId = deserializeObject.order_items[ i ].order_item_id,
                         MerchantSku = deserializeObject.order_items[ i ].merchant_sku,
@@ -68,7 +68,7 @@ namespace JetAccess.Services.Parsers
                         ItemTax = deserializeObject.order_items[ i ].item_price.item_tax,
                     };
 
-                    ( ( List< Models.GetOrderWithOutShipmentDetail.OrderItem > )res.OrderItems ).Add( item );
+                    ( ( List< Models.Services.JetRestService.GetOrderWithOutShipmentDetail.OrderItem > )res.OrderItems ).Add( item );
                 }
 
                 return res;
