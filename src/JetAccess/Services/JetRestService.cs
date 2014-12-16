@@ -11,6 +11,7 @@ using JetAccess.Models.Services.JetRestService.GetOrderIds;
 using JetAccess.Models.Services.JetRestService.GetOrderWithOutShipmentDetail;
 using JetAccess.Models.Services.JetRestService.GetProductsSkus;
 using JetAccess.Models.Services.JetRestService.GetToken;
+using JetAccess.Models.Services.JetRestService.PutMerchantSkusInventory;
 using JetAccess.Services.Parsers;
 
 namespace JetAccess.Services
@@ -88,10 +89,21 @@ namespace JetAccess.Services
             return result;
         }
 
+        public async Task< PutMerchantSkusInventoryResponse > PutMerchantSkusInventoryAsync( PutMerchantSkusInventoryRequest putMerchantSkusInventoryRequest )
+        {
+            var mark = Guid.NewGuid().ToString();
+            var token = await GetTokenOrReturnChachedAsync().ConfigureAwait( false );
+            var header = new Dictionary< string, string >() { { "Authorization", token.ToString() } };
+            var body2 = putMerchantSkusInventoryRequest.ToJson();
+            var result = await InvokeCallAsync<PutMerchantSkusInventoryResponseParser, PutMerchantSkusInventoryResponse>(_endPoint.EndPointUrl + "/" + putMerchantSkusInventoryRequest.Id + "/inventory?", RequestType.PUT, mark, body: body2, rawHeaders: header).ConfigureAwait(false);
+            return result;
+        }
+
         protected sealed class RequestType
         {
             public static RequestType GET = new RequestType( "GET" );
             public static RequestType POST = new RequestType( "POST" );
+            public static RequestType PUT = new RequestType( "PUT" );
 
             public String Type{ get; private set; }
 
@@ -111,6 +123,10 @@ namespace JetAccess.Services
                     WebRequest webRequest;
                     if( requestType == RequestType.POST )
                         webRequest = await WebRequestServices.CreatePostRequestAsync( partialUrl, body, rawHeaders ).ConfigureAwait( false );
+                    else if( requestType == RequestType.GET )
+                        webRequest = await WebRequestServices.CreateGetRequestAsync( partialUrl, body, rawHeaders ).ConfigureAwait( false );
+                    else if( requestType == RequestType.PUT )
+                        webRequest = await WebRequestServices.CreatePutRequestAsync( partialUrl, body, rawHeaders ).ConfigureAwait( false );
                     else
                         webRequest = await WebRequestServices.CreateGetRequestAsync( partialUrl, body, rawHeaders ).ConfigureAwait( false );
 

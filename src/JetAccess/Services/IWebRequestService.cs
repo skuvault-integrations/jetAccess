@@ -15,5 +15,6 @@ namespace JetAccess.Services
 
         void PopulateRequestByBody( string body, HttpWebRequest webRequest );
         Task< WebRequest > CreatePostRequestAsync( string serviceUrl, string body, Dictionary< string, string > rawHeaders );
+        Task< WebRequest > CreatePutRequestAsync( string serviceUrl, string body, Dictionary< string, string > rawHeaders );
     }
 }

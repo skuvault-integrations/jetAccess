@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
+using JetAccess.Models.Services.JetRestService.PutMerchantSkusInventory;
 using JetAccess.Services;
 using JetAccessTestsIntegration.TestEnvironment;
 using NUnit.Framework;
@@ -89,6 +91,30 @@ namespace JetAccessTestsIntegration.Services
 
             //------------ Assert
             task2.Result.GulfillmentNodes.Should().OnlyContain( x => !string.IsNullOrWhiteSpace( x.FulfillmentNodeId ) );
+        }
+
+        [ Test ]
+        public void PutMerchantSkusInventory_PasswordsAndConnectionAreGood_ProductsInventoryUpdated()
+        {
+            //------------ Arrange
+            var service = new JetRestService( _testDataReader.GetJetUserCredentials, EndPoint.Test );
+            var task1 = service.GetProductsAsync();
+            task1.Wait();
+            var task2 = service.GetMerchantSkusInventoryAsync( task1.Result.SkuUrls.First() );
+            task2.Wait();
+
+            //------------ Act
+            var quantity = task2.Result.GulfillmentNodes.First().Quantity;
+            IEnumerable< FulfillmentNode > nodes = new List< FulfillmentNode > { new FulfillmentNode( task2.Result.GulfillmentNodes.First().FulfillmentNodeId, quantity + 1 ) };
+            PutMerchantSkusInventoryRequest putMerchantSkusInventoryRequest = new PutMerchantSkusInventoryRequest( task1.Result.SkuUrls.First(), nodes );
+            var task3 = service.PutMerchantSkusInventoryAsync( putMerchantSkusInventoryRequest );
+            task3.Wait();
+
+            var task4 = service.GetMerchantSkusInventoryAsync( task1.Result.SkuUrls.First() );
+            task4.Wait();
+
+            //------------ Assert
+            task4.Result.GulfillmentNodes.Should().OnlyContain( x => x.Quantity == ( quantity + 1 ) );
         }
     }
 }

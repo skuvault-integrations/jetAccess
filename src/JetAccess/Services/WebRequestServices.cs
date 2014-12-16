@@ -12,6 +12,11 @@ namespace JetAccess.Services
     internal class WebRequestServices: IWebRequestServices, ICreateCallInfo
     {
         #region BaseRequests
+        public async Task< WebRequest > CreatePutRequestAsync( string serviceUrl, string body, Dictionary< string, string > rawHeaders )
+        {
+            return await CreateCustomRequestAsync( serviceUrl, body, rawHeaders, WebRequestMethods.Http.Put ).ConfigureAwait( false );
+        }
+
         public async Task< WebRequest > CreateGetRequestAsync( string serviceUrl, string body, Dictionary< string, string > rawHeaders )
         {
             return await CreateCustomRequestAsync( serviceUrl, body, rawHeaders, WebRequestMethods.Http.Get ).ConfigureAwait( false );

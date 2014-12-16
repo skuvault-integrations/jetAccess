@@ -1,8 +1,5 @@
-using System;
 using System.IO;
 using System.Net;
-using System.Text;
-using System.Xml.Linq;
 
 namespace JetAccess.Services.Parsers
 {
@@ -54,26 +51,26 @@ namespace JetAccess.Services.Parsers
 
         public virtual TParseResult Parse( Stream stream, bool keepStreamPos = true )
         {
-            var streamStartPos = stream.Position;
+            //var streamStartPos = stream.Position;
 
-            try
-            {
-                var root = XElement.Load( stream );
-                return ( TParseResult )new Object();
-            }
-            catch( Exception ex )
-            {
-                var buffer = new byte[ stream.Length ];
-                stream.Read( buffer, 0, ( int )stream.Length );
-                var utf8Encoding = new UTF8Encoding();
-                var bufferStr = utf8Encoding.GetString( buffer );
-                throw new Exception( "Can't parse: " + bufferStr, ex );
-            }
-            finally
-            {
-                if( keepStreamPos )
-                    stream.Position = streamStartPos;
-            }
+            //try
+            //{
+            //var root = XElement.Load( stream );
+            return default( TParseResult );
+            //}
+            //catch( Exception ex )
+            //{
+            //    var buffer = new byte[ stream.Length ];
+            //    stream.Read( buffer, 0, ( int )stream.Length );
+            //    var utf8Encoding = new UTF8Encoding();
+            //    var bufferStr = utf8Encoding.GetString( buffer );
+            //    throw new Exception( "Can't parse: " + bufferStr, ex );
+            //}
+            //finally
+            //{
+            //    if( keepStreamPos )
+            //        stream.Position = streamStartPos;
+            //}
         }
     }
 }
