@@ -16,8 +16,8 @@ namespace JetAccess.Services.Parsers
             public string fulfillment_node;
             public DateTime order_placed_date;
             public DateTime order_transmission_date;
-            public string created;
-            public OrderItem[] orderItems;
+            public string status;
+            public OrderItem[] order_items;
         }
 
         private class OrderItem
@@ -25,12 +25,12 @@ namespace JetAccess.Services.Parsers
             public string order_item_id;
             public string merchant_sku;
             public decimal request_order_quantity;
-            public ItemPrice itemPrice;
+            public item_price item_price;
             public string product_title;
             public string url;
         }
 
-        private class ItemPrice
+        private class item_price
         {
             public decimal base_price;
             public decimal item_tax;
@@ -49,23 +49,23 @@ namespace JetAccess.Services.Parsers
                     FulFillmentNode = deserializeObject.fulfillment_node,
                     OrderPlacedDate = deserializeObject.order_placed_date,
                     OrderTransmitionDate = deserializeObject.order_transmission_date,
-                    Created = deserializeObject.created,
+                    Created = deserializeObject.status,
                     OrderItems = new List< Models.GetOrderWithOutShipmentDetail.OrderItem >(),
                 };
 
-                for( var i = 0; i < deserializeObject.orderItems.Count(); i++ )
+                for( var i = 0; i < deserializeObject.order_items.Count(); i++ )
                 {
                     var item = new Models.GetOrderWithOutShipmentDetail.OrderItem
                     {
-                        OrderItemId = deserializeObject.orderItems[ i ].order_item_id,
-                        MerchantSku = deserializeObject.orderItems[ i ].merchant_sku,
-                        RequestOrderQuantity = deserializeObject.orderItems[ i ].request_order_quantity,
-                        ProductTitle = deserializeObject.orderItems[ i ].product_title,
-                        Url = deserializeObject.orderItems[ i ].url,
-                        BasePrice = deserializeObject.orderItems[ i ].itemPrice.base_price,
-                        ItemShippingCost = deserializeObject.orderItems[ i ].itemPrice.item_shipping_cost,
-                        ItemShippingTax = deserializeObject.orderItems[ i ].itemPrice.item_shipping_tax,
-                        ItemTax = deserializeObject.orderItems[ i ].itemPrice.item_tax,
+                        OrderItemId = deserializeObject.order_items[ i ].order_item_id,
+                        MerchantSku = deserializeObject.order_items[ i ].merchant_sku,
+                        RequestOrderQuantity = deserializeObject.order_items[ i ].request_order_quantity,
+                        ProductTitle = deserializeObject.order_items[ i ].product_title,
+                        Url = deserializeObject.order_items[ i ].url,
+                        BasePrice = deserializeObject.order_items[ i ].item_price.base_price,
+                        ItemShippingCost = deserializeObject.order_items[ i ].item_price.item_shipping_cost,
+                        ItemShippingTax = deserializeObject.order_items[ i ].item_price.item_shipping_tax,
+                        ItemTax = deserializeObject.order_items[ i ].item_price.item_tax,
                     };
 
                     ( ( List< Models.GetOrderWithOutShipmentDetail.OrderItem > )res.OrderItems ).Add( item );
