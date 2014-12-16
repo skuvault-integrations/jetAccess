@@ -66,6 +66,15 @@ namespace JetAccess.Services
             return result;
         }
 
+        public async Task<GetProductsResponse> GetProductsAsync()
+        {
+            var mark = Guid.NewGuid().ToString();
+            var token = await GetTokenOrReturnChachedAsync().ConfigureAwait(false);
+            var header = new Dictionary<string, string>() { { "Authorization", token.ToString() } };
+            var result = await InvokeCallAsync<GetProductsResponseParser, GetProductsResponse>(_endPoint.EndPointUrl + "/merchant-skus?", RequestType.GET, mark, rawHeaders: header).ConfigureAwait(false);
+            return result;
+        }
+
         protected sealed class RequestType
         {
             public static RequestType GET = new RequestType( "GET" );
