@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using JetAccess.Services.Parsers;
 
 namespace JetAccess.Models.GetOrderWithOutShipmentDetail
 {
@@ -12,7 +11,7 @@ namespace JetAccess.Models.GetOrderWithOutShipmentDetail
         public DateTime OrderPlacedDate{ get; set; }
         public DateTime OrderTransmitionDate{ get; set; }
         public string Created{ get; set; }
-        public IEnumerable<OrderItem> OrderItems{ get; set; }
+        public IEnumerable< OrderItem > OrderItems{ get; set; }
     }
 
     internal class OrderItem

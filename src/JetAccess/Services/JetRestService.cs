@@ -57,7 +57,7 @@ namespace JetAccess.Services
 
         public async Task< GetOrderWithoutShipmentDetailResponse > GetOrderWithoutShipmentDetailAsync( string orderUrl )
         {
-            Condition.Requires(orderUrl).IsNotNullOrWhiteSpace();
+            Condition.Requires( orderUrl ).IsNotNullOrWhiteSpace();
 
             var mark = Guid.NewGuid().ToString();
             var token = await GetTokenOrReturnChachedAsync().ConfigureAwait( false );

@@ -29,7 +29,7 @@ namespace JetAccess.Services
                 if( rawHeaders == null )
                     rawHeaders = new Dictionary< string, string >();
 
-                if (body == null)
+                if( body == null )
                     body = string.Empty;
 
                 var encoding = new UTF8Encoding();
@@ -46,9 +46,11 @@ namespace JetAccess.Services
                     serviceRequest.Headers.Add( rawHeadersKey, rawHeaders[ rawHeadersKey ] );
                 }
 
-                if (encodedBody.Length > 0)
-                    using (var newStream = await serviceRequest.GetRequestStreamAsync().ConfigureAwait(false))
-                        newStream.Write(encodedBody, 0, encodedBody.Length);
+                if( encodedBody.Length > 0 )
+                {
+                    using( var newStream = await serviceRequest.GetRequestStreamAsync().ConfigureAwait( false ) )
+                        newStream.Write( encodedBody, 0, encodedBody.Length );
+                }
 
                 return serviceRequest;
             }
