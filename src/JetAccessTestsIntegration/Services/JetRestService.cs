@@ -20,21 +20,21 @@ namespace JetAccessTestsIntegration.Services
         public void GetToken_PasswordsAndConnectionAreGood_TokenReceived()
         {
             //------------ Arrange
-            var service = new JetRestService( _testDataReader.GetJetUserCredentials );
+            var service = new JetRestService( _testDataReader.GetJetUserCredentials, EndPoint.Test);
 
             //------------ Act
             var task = service.GetTokenAsync();
             task.Wait();
 
             //------------ Assert
-            task.Result.Token.Should().NotBeNullOrWhiteSpace();
+            task.Result.TokenInfo.Should().NotBeNull();
         }
 
         [Test]
         public void GetOrders_PasswordsAndConnectionAreGood_OrderIdsReceived()
         {
             //------------ Arrange
-            var service = new JetRestService(_testDataReader.GetJetUserCredentials);
+            var service = new JetRestService(_testDataReader.GetJetUserCredentials, EndPoint.Test);
 
             //------------ Act
             var task = service.GetOrderUrlsAsync();

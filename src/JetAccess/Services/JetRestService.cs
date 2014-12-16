@@ -14,19 +14,42 @@ namespace JetAccess.Services
     internal class JetRestService: ICreateCallInfo
     {
         protected JetUserCredentials _userCredentials;
+        protected TokenInfo _token;
+        protected EndPoint _endPoint;
         public IWebRequestServices WebRequestServices{ get; set; }
 
-        public JetRestService( JetUserCredentials userCredentials )
+        public JetRestService( JetUserCredentials userCredentials, EndPoint endPoint )
         {
             _userCredentials = userCredentials;
+            _endPoint = endPoint;
             WebRequestServices = new WebRequestServices();
+        }
+
+        public async Task< TokenInfo > GetTokenOrReturnChachedAsync()
+        {
+            if( _token == null )
+            {
+                var res = await GetTokenAsync().ConfigureAwait( false );
+                _token = res.TokenInfo;
+            }
+
+            return _token;
         }
 
         public async Task< GetTokenResponse > GetTokenAsync()
         {
             var mark = Guid.NewGuid().ToString();
             var body = string.Format( "{{\"user\":\"{0}\",\"pass\":\"{1}\"}}", _userCredentials.ApiUser, _userCredentials.Secret );
-            var result = await InvokeCallAsync< GetTokenResponseParser, GetTokenResponse >( "https://merchant-api.test.jet.com/api/token/", RequestType.POST, mark, body ).ConfigureAwait( false );
+            var result = await InvokeCallAsync< GetTokenResponseParser, GetTokenResponse >( _endPoint.EndPointUrl + "/token/", RequestType.POST, mark, body ).ConfigureAwait( false );
+            return result;
+        }
+
+        public async Task< GetOrderUrlsResponse > GetOrderUrlsAsync()
+        {
+            var mark = Guid.NewGuid().ToString();
+            var token = await GetTokenOrReturnChachedAsync().ConfigureAwait( false );
+            var header = new Dictionary< string, string >() { { "Authorization", token.ToString() } };
+            var result = await InvokeCallAsync< GetOrderUrlsResponseParser, GetOrderUrlsResponse >( _endPoint.EndPointUrl + "/orders/ready?", RequestType.GET, mark, rawHeaders : header ).ConfigureAwait( false );
             return result;
         }
 
@@ -68,13 +91,18 @@ namespace JetAccess.Services
                 throw new Exception( string.Format( "Exception occured. {0}", this.CreateMethodCallInfo( parameters, mark ) ), exception );
             }
         }
+    }
 
-        public async Task< GetOrderUrlsResponse > GetOrderUrlsAsync()
+    internal sealed class EndPoint
+    {
+        public static EndPoint Test = new EndPoint( "https://merchant-api.test.jet.com/api" );
+        public static EndPoint Production = new EndPoint( "https://merchant-api.jet.com/api" );
+
+        public String EndPointUrl{ get; private set; }
+
+        private EndPoint( string endPointUrl )
         {
-            var mark = Guid.NewGuid().ToString();
-            var header = new Dictionary< string, string >() { { "Authorization", "Bearer ..-------" } };
-            var result = await InvokeCallAsync< GetOrderUrlsResponseParser, GetOrderUrlsResponse >( "https://merchant-api.test.jet.com/api/orders/ready?", RequestType.GET, mark, rawHeaders : header ).ConfigureAwait( false );
-            return result;
+            EndPointUrl = endPointUrl;
         }
     }
 }

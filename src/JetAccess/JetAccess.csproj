@@ -68,6 +68,7 @@
     <Compile Include="Models\Ping\PingInfo.cs" />
     <Compile Include="Models\Services\JetRestService\GetOrderIds\GetOrderUrlsResponse.cs" />
     <Compile Include="Models\Services\JetRestService\GetToken\GetTokenResponse.cs" />
+    <Compile Include="Models\Services\JetRestService\GetToken\TokenInfo.cs" />
     <Compile Include="Models\UpdateInventory\Inventory.cs" />
     <Compile Include="JetException.cs" />
     <Compile Include="JetFactory.cs" />

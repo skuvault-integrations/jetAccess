@@ -4,11 +4,9 @@
     {
         public GetTokenResponse( string token, string tokenType )
         {
-            Token = token;
-            TokenType = tokenType;
+            TokenInfo = new TokenInfo( token, tokenType );
         }
 
-        public string Token{ get; private set; }
-        public string TokenType{ get; private set; }
+        public TokenInfo TokenInfo{ get; private set; }
     }
 }
