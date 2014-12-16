@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Linq;
+using FluentAssertions;
 using JetAccess.Services;
 using JetAccessTestsIntegration.TestEnvironment;
 using NUnit.Framework;
@@ -20,7 +21,7 @@ namespace JetAccessTestsIntegration.Services
         public void GetToken_PasswordsAndConnectionAreGood_TokenReceived()
         {
             //------------ Arrange
-            var service = new JetRestService( _testDataReader.GetJetUserCredentials, EndPoint.Test);
+            var service = new JetRestService( _testDataReader.GetJetUserCredentials, EndPoint.Test );
 
             //------------ Act
             var task = service.GetTokenAsync();
@@ -30,18 +31,34 @@ namespace JetAccessTestsIntegration.Services
             task.Result.TokenInfo.Should().NotBeNull();
         }
 
-        [Test]
+        [ Test ]
         public void GetOrders_PasswordsAndConnectionAreGood_OrderIdsReceived()
         {
             //------------ Arrange
-            var service = new JetRestService(_testDataReader.GetJetUserCredentials, EndPoint.Test);
+            var service = new JetRestService( _testDataReader.GetJetUserCredentials, EndPoint.Test );
 
             //------------ Act
             var task = service.GetOrderUrlsAsync();
             task.Wait();
 
             //------------ Assert
-            task.Result.OrderUrls.Should().HaveCount(x => x > 0);
+            task.Result.OrderUrls.Should().HaveCount( x => x > 0 );
+        }
+
+        [ Test ]
+        public void GetOrdersWithOutShippedDetails_PasswordsAndConnectionAreGood_OrderIdsReceived()
+        {
+            //------------ Arrange
+            var service = new JetRestService( _testDataReader.GetJetUserCredentials, EndPoint.Test );
+
+            //------------ Act
+            var task = service.GetOrderUrlsAsync();
+            task.Wait();
+            var task2 = service.GetOrderWithoutShipmentDetailAsync( task.Result.OrderUrls.First() );
+            task2.Wait();
+
+            //------------ Assert
+            task2.Result.MerchantOrderId.Should().NotBeNullOrWhiteSpace();
         }
     }
 }

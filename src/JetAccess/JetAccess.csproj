@@ -73,6 +73,8 @@
     <Compile Include="JetException.cs" />
     <Compile Include="JetFactory.cs" />
     <Compile Include="JetService.cs" />
+    <Compile Include="Models\GetOrderWithOutShipmentDetail\GetOrderWithoutShipmentDetailResponse.cs" />
+    <Compile Include="Services\Parsers\GetOrderWithoutShipmentDetailResponseParser.cs" />
     <Compile Include="Services\IWebRequestService.cs" />
     <Compile Include="Services\JetRestService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

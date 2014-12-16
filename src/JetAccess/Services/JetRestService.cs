@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using CuttingEdge.Conditions;
 using Jet.Misc;
 using JetAccess.Misc;
 using JetAccess.Models;
+using JetAccess.Models.GetOrderWithOutShipmentDetail;
 using JetAccess.Models.Services.JetRestService.GetOrderIds;
 using JetAccess.Models.Services.JetRestService.GetToken;
 using JetAccess.Services.Parsers;
@@ -50,6 +52,17 @@ namespace JetAccess.Services
             var token = await GetTokenOrReturnChachedAsync().ConfigureAwait( false );
             var header = new Dictionary< string, string >() { { "Authorization", token.ToString() } };
             var result = await InvokeCallAsync< GetOrderUrlsResponseParser, GetOrderUrlsResponse >( _endPoint.EndPointUrl + "/orders/ready?", RequestType.GET, mark, rawHeaders : header ).ConfigureAwait( false );
+            return result;
+        }
+
+        public async Task< GetOrderWithoutShipmentDetailResponse > GetOrderWithoutShipmentDetailAsync( string orderUrl )
+        {
+            Condition.Requires(orderUrl).IsNotNullOrWhiteSpace();
+
+            var mark = Guid.NewGuid().ToString();
+            var token = await GetTokenOrReturnChachedAsync().ConfigureAwait( false );
+            var header = new Dictionary< string, string >() { { "Authorization", token.ToString() } };
+            var result = await InvokeCallAsync< GetOrderWithoutShipmentDetailResponseParser, GetOrderWithoutShipmentDetailResponse >( _endPoint.EndPointUrl + orderUrl, RequestType.GET, mark, rawHeaders : header ).ConfigureAwait( false );
             return result;
         }
 

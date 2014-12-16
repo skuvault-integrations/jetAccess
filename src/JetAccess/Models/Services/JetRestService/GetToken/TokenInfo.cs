@@ -6,8 +6,8 @@ namespace JetAccess.Models.Services.JetRestService.GetToken
     {
         public TokenInfo( string token, string tokenType )
         {
-            Condition.Requires( token ).IsNullOrWhiteSpace();
-            Condition.Requires( tokenType ).IsNullOrWhiteSpace();
+            Condition.Requires( token ).IsNotNullOrWhiteSpace();
+            Condition.Requires( tokenType ).IsNotNullOrWhiteSpace();
 
             Token = token;
             TokenType = tokenType;
@@ -18,7 +18,7 @@ namespace JetAccess.Models.Services.JetRestService.GetToken
 
         public override string ToString()
         {
-            return string.Format("{0} {1}", Token, TokenType);
+            return string.Format( "{0} {1}", TokenType, Token );
         }
     }
 }
