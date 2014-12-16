@@ -74,7 +74,7 @@
     <Compile Include="JetFactory.cs" />
     <Compile Include="JetService.cs" />
     <Compile Include="Models\Services\JetRestService\GetOrderWithOutShipmentDetail\GetOrderWithoutShipmentDetailResponse.cs" />
-    <Compile Include="Models\Services\JetRestService\GetProducts\GetProductsResponse.cs" />
+    <Compile Include="Models\Services\JetRestService\GetProductsSkus\GetProductsResponse.cs" />
     <Compile Include="Services\Parsers\GetProductsResponseParser.cs" />
     <Compile Include="Services\Parsers\GetOrderWithoutShipmentDetailResponseParser.cs" />
     <Compile Include="Services\IWebRequestService.cs" />

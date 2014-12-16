@@ -1,4 +1,5 @@
 using System.IO;
+using JetAccess.Models.Services.JetRestService.GetProductsSkus;
 using JetAccess.Services.Parsers;
 using Newtonsoft.Json;
 

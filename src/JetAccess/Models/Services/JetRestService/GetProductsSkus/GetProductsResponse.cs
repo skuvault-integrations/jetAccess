@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace JetAccess.Services
+namespace JetAccess.Models.Services.JetRestService.GetProductsSkus
 {
     internal class GetProductsResponse
     {

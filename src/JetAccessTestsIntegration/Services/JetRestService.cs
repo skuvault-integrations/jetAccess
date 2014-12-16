@@ -61,18 +61,18 @@ namespace JetAccessTestsIntegration.Services
             task2.Result.MerchantOrderId.Should().NotBeNullOrWhiteSpace();
         }
 
-        [Test]
+        [ Test ]
         public void GetProducts_PasswordsAndConnectionAreGood_ProductsUrlsReceived()
         {
             //------------ Arrange
-            var service = new JetRestService(_testDataReader.GetJetUserCredentials, EndPoint.Test);
+            var service = new JetRestService( _testDataReader.GetJetUserCredentials, EndPoint.Test );
 
             //------------ Act
             var task = service.GetProductsAsync();
             task.Wait();
 
             //------------ Assert
-            task.Result.SkuUrls.Should().HaveCount(x => x > 0);
+            task.Result.SkuUrls.Should().HaveCount( x => x > 0 );
         }
     }
 }
