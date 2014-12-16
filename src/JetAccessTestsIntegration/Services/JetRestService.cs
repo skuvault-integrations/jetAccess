@@ -74,5 +74,21 @@ namespace JetAccessTestsIntegration.Services
             //------------ Assert
             task.Result.SkuUrls.Should().HaveCount( x => x > 0 );
         }
+
+        [ Test ]
+        public void GetMerchantSkusInventory_PasswordsAndConnectionAreGood_ProductsInventoryReceived()
+        {
+            //------------ Arrange
+            var service = new JetRestService( _testDataReader.GetJetUserCredentials, EndPoint.Test );
+
+            //------------ Act
+            var task = service.GetProductsAsync();
+            task.Wait();
+            var task2 = service.GetMerchantSkusInventoryAsync( task.Result.SkuUrls.First() );
+            task2.Wait();
+
+            //------------ Assert
+            task2.Result.GulfillmentNodes.Should().OnlyContain( x => !string.IsNullOrWhiteSpace( x.FulfillmentNodeId ) );
+        }
     }
 }

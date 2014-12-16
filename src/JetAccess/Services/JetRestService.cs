@@ -6,6 +6,7 @@ using CuttingEdge.Conditions;
 using Jet.Misc;
 using JetAccess.Misc;
 using JetAccess.Models;
+using JetAccess.Models.Services.JetRestService.GetMerchantSkusInventory;
 using JetAccess.Models.Services.JetRestService.GetOrderIds;
 using JetAccess.Models.Services.JetRestService.GetOrderWithOutShipmentDetail;
 using JetAccess.Models.Services.JetRestService.GetProductsSkus;
@@ -73,6 +74,17 @@ namespace JetAccess.Services
             var token = await GetTokenOrReturnChachedAsync().ConfigureAwait( false );
             var header = new Dictionary< string, string >() { { "Authorization", token.ToString() } };
             var result = await InvokeCallAsync< GetProductsResponseParser, GetProductsResponse >( _endPoint.EndPointUrl + "/merchant-skus?", RequestType.GET, mark, rawHeaders : header ).ConfigureAwait( false );
+            return result;
+        }
+
+        public async Task< GetMerchantSkusInventoryResponse > GetMerchantSkusInventoryAsync( string productUrl )
+        {
+            Condition.Requires( productUrl ).IsNotNullOrWhiteSpace();
+
+            var mark = Guid.NewGuid().ToString();
+            var token = await GetTokenOrReturnChachedAsync().ConfigureAwait( false );
+            var header = new Dictionary< string, string >() { { "Authorization", token.ToString() } };
+            var result = await InvokeCallAsync< GetMerchantSkusInventoryResponseParser, GetMerchantSkusInventoryResponse >( _endPoint.EndPointUrl + "/" + productUrl + "/inventory?", RequestType.GET, mark, rawHeaders : header ).ConfigureAwait( false );
             return result;
         }
 

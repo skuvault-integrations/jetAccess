@@ -66,6 +66,7 @@
     <Compile Include="Misc\PredefinedValues.cs" />
     <Compile Include="Misc\JetLogger.cs" />
     <Compile Include="Models\Ping\PingInfo.cs" />
+    <Compile Include="Models\Services\JetRestService\GetMerchantSkusInventory\GetMerchantSkusInventoryResponse.cs" />
     <Compile Include="Models\Services\JetRestService\GetOrderIds\GetOrderUrlsResponse.cs" />
     <Compile Include="Models\Services\JetRestService\GetToken\GetTokenResponse.cs" />
     <Compile Include="Models\Services\JetRestService\GetToken\TokenInfo.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="JetService.cs" />
     <Compile Include="Models\Services\JetRestService\GetOrderWithOutShipmentDetail\GetOrderWithoutShipmentDetailResponse.cs" />
     <Compile Include="Models\Services\JetRestService\GetProductsSkus\GetProductsResponse.cs" />
+    <Compile Include="Services\Parsers\GetMerchantSkusInventoryResponseParser.cs" />
     <Compile Include="Services\Parsers\GetProductsResponseParser.cs" />
     <Compile Include="Services\Parsers\GetOrderWithoutShipmentDetailResponseParser.cs" />
     <Compile Include="Services\IWebRequestService.cs" />
