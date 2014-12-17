@@ -163,9 +163,5 @@ namespace JetAccess
         }
         #endregion
 
-        private static void LogTraceException( string message, JetException ebayException )
-        {
-            JetLogger.Log().Trace( ebayException, message );
-        }
     }
 }
