@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetAccess.Misc;
 using JetAccess.Models.Services.JetRestService.GetOrderWithOutShipmentDetail;
 
 namespace JetAccess.Models.GetOrders
 {
-    public class Order
+    public class Order: IJsonSerializable
     {
         internal static Order From( GetOrderWithoutShipmentDetailResponse getOrderWithoutShipmentDetailResponse )
         {
@@ -17,8 +18,7 @@ namespace JetAccess.Models.GetOrders
                 OrderPlacedDate = getOrderWithoutShipmentDetailResponse.OrderPlacedDate,
                 OrderTransmitionDate = getOrderWithoutShipmentDetailResponse.OrderTransmitionDate,
                 ReferenceOrderId = getOrderWithoutShipmentDetailResponse.ReferenceOrderId,
-                //OrderItems = getOrderWithoutShipmentDetailResponse.OrderItems.Select(OrderLineItem.From).ToList(),
-                OrderItems = getOrderWithoutShipmentDetailResponse.OrderItems.Convert< OrderItem, OrderLineItem >(),
+                OrderItems = getOrderWithoutShipmentDetailResponse.OrderItems.Select( OrderLineItem.From ).ToList(),
             };
 
             return order;
@@ -37,27 +37,32 @@ namespace JetAccess.Models.GetOrders
         public string FulFillmentNode{ get; set; }
 
         public string Created{ get; set; }
+
+        public string ToJson()
+        {
+            return string.Format("{{MerchantOrderId:\"{0}\", Created:\"{1}\", RequestOrderQuantity:\"{2}\"}}", this.MerchantOrderId, this.Created, this.OrderItems.ToJson());
+        }
     }
 
-    public class OrderLineItem : IConvertableFrom<OrderItem,OrderLineItem>
+    public class OrderLineItem: IJsonSerializable
     {
-        //internal static OrderLineItem From( OrderItem getOrderWithoutShipmentDetailResponse )
-        //{
-        //    var orderLineItem = new OrderLineItem
-        //    {
-        //        BasePrice = getOrderWithoutShipmentDetailResponse.BasePrice,
-        //        ItemShippingCost = getOrderWithoutShipmentDetailResponse.ItemShippingCost,
-        //        ItemShippingTax = getOrderWithoutShipmentDetailResponse.ItemShippingTax,
-        //        ItemTax = getOrderWithoutShipmentDetailResponse.ItemTax,
-        //        MerchantSku = getOrderWithoutShipmentDetailResponse.MerchantSku,
-        //        OrderItemId = getOrderWithoutShipmentDetailResponse.OrderItemId,
-        //        ProductTitle = getOrderWithoutShipmentDetailResponse.ProductTitle,
-        //        RequestOrderQuantity = getOrderWithoutShipmentDetailResponse.RequestOrderQuantity,
-        //        Url = getOrderWithoutShipmentDetailResponse.Url
-        //    };
+        internal static OrderLineItem From( OrderItem getOrderWithoutShipmentDetailResponse )
+        {
+            var orderLineItem = new OrderLineItem
+            {
+                BasePrice = getOrderWithoutShipmentDetailResponse.BasePrice,
+                ItemShippingCost = getOrderWithoutShipmentDetailResponse.ItemShippingCost,
+                ItemShippingTax = getOrderWithoutShipmentDetailResponse.ItemShippingTax,
+                ItemTax = getOrderWithoutShipmentDetailResponse.ItemTax,
+                MerchantSku = getOrderWithoutShipmentDetailResponse.MerchantSku,
+                OrderItemId = getOrderWithoutShipmentDetailResponse.OrderItemId,
+                ProductTitle = getOrderWithoutShipmentDetailResponse.ProductTitle,
+                RequestOrderQuantity = getOrderWithoutShipmentDetailResponse.RequestOrderQuantity,
+                Url = getOrderWithoutShipmentDetailResponse.Url
+            };
 
-        //    return orderLineItem;
-        //}
+            return orderLineItem;
+        }
 
         public OrderLineItem()
         {
@@ -81,46 +86,9 @@ namespace JetAccess.Models.GetOrders
 
         public decimal BasePrice{ get; set; }
 
-        //public OrderLineItem From< OrderItem, OrderLineItem >( OrderItem source )
-        //{
-        //    var orderLineItem = new OrderLineItem
-        //    {
-        //        BasePrice = getOrderWithoutShipmentDetailResponse.BasePrice,
-        //        ItemShippingCost = getOrderWithoutShipmentDetailResponse.ItemShippingCost,
-        //        ItemShippingTax = getOrderWithoutShipmentDetailResponse.ItemShippingTax,
-        //        ItemTax = getOrderWithoutShipmentDetailResponse.ItemTax,
-        //        MerchantSku = getOrderWithoutShipmentDetailResponse.MerchantSku,
-        //        OrderItemId = getOrderWithoutShipmentDetailResponse.OrderItemId,
-        //        ProductTitle = getOrderWithoutShipmentDetailResponse.ProductTitle,
-        //        RequestOrderQuantity = getOrderWithoutShipmentDetailResponse.RequestOrderQuantity,
-        //        Url = getOrderWithoutShipmentDetailResponse.Url
-        //    };
-
-        //    return orderLineItem;
-        //    return ( OrderLineItem )new Object();
-        //}
-        public OrderLineItem From( OrderItem source )
+        public string ToJson()
         {
-            return  ;
+            return string.Format( "{{MerchantSku:\"{0}\", OrderItemId:\"{1}\", RequestOrderQuantity:\"{2}\"}}", this.MerchantSku, this.OrderItemId, this.RequestOrderQuantity );
         }
-    }
-
-    public interface IConvertableFrom<TS, TD> where TD : new()
-    {
-        TD From(TS source);
-    }
-
-    public static class IConvertableFromExtensions
-    {
-        public static IEnumerable< TD > Convert< TS, TD >( this IEnumerable< TS > sourceEnum )
-            where TD : IConvertableFrom< TS, TD >, new()
-        {
-            return sourceEnum.Select( x => new TD().From< TS, TD >( x ) );
-        }
-
-        //public static TD From<TS, TD>(TS source) where TD : IConvertableFrom<TS, TD>, new()
-        //{
-        //    return default( TD );
-        //}
     }
 }

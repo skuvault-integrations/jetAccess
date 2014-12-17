@@ -11,6 +11,17 @@ namespace Jet.Misc
     internal static class ExtensionsInternal
     {
         #region Сommon
+        public static string ToJson( this IEnumerable< string > enumerable )
+        {
+            var list = enumerable as IList< string > ?? enumerable.ToList();
+            if( enumerable == null || list.Count == 0 )
+                return PredefinedValues.EmptyJsonList;
+
+            var values = list.Select( x => string.Format( "\"{0}\"", x ) ).ToList();
+            var json = "[" + string.Join( ",", values ).ToList() + "]";
+            return json;
+        }
+
         public static string ToJson( this Dictionary< string, string > dictionary )
         {
             if( dictionary == null || dictionary.Count == 0 )

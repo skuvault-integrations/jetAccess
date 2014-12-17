@@ -16,6 +16,7 @@ namespace JetAccess
 {
     public class JetService: IJetService, ICreateCallInfo
     {
+        private readonly int _batchSize = 16;
         internal IJetRestService JetRestService{ get; set; }
         public JetUserCredentials JetUserCredentials{ get; set; }
         public EndPoint EndPoint{ get; set; }
@@ -86,18 +87,22 @@ namespace JetAccess
         #endregion
 
         #region Orders
-        public async Task< IEnumerable< Order > > GetOrdersAsync( DateTime dateFrom, DateTime dateTo )
+        public async Task< IEnumerable< Order > > GetOrdersAsync( DateTime createDateFrom, DateTime createdDateTo )
         {
-            string methodParameters = string.Format( "{{dateFrom:{0}, dateTo:{1}}}", dateFrom, dateTo );
-            string mark = Guid.NewGuid().ToString();
             try
             {
+                var methodParameters = string.Format( "{{\"createDateFrom\":{0}, \"createdDateTo\":{1}}}", createDateFrom, createdDateTo );
+                var mark = Guid.NewGuid().ToString();
+
                 JetLogger.LogTraceStarted( this.CreateMethodCallInfo( methodParameters, mark ) );
 
-                JetLogger.LogTraceEnded( this.CreateMethodCallInfo( methodParameters, mark, methodResult : "result.ToJson()" ) );
+                var orderUrls = await JetRestService.GetOrderUrlsAsync().ConfigureAwait( false );
+                var orders = await orderUrls.OrderUrls.ProcessInBatchAsync( _batchSize, async s => await JetRestService.GetOrderWithoutShipmentDetailAsync( s ).ConfigureAwait( false ) ).ConfigureAwait( false );
+                var ordersFiltered = orders.Where( x => x.OrderPlacedDate < createdDateTo && x.OrderPlacedDate > createDateFrom ).Select( Order.From ).ToList();
 
-                //todo: replace me
-                throw new NotImplementedException();
+                JetLogger.LogTraceEnded( this.CreateMethodCallInfo( methodParameters, mark, methodResult : ordersFiltered.ToJson() ) );
+
+                return ordersFiltered;
             }
             catch( Exception exception )
             {
@@ -107,19 +112,22 @@ namespace JetAccess
             }
         }
 
-        public async Task< IEnumerable< Order > > GetOrdersAsync( params string[] docNumbers )
+        public async Task< IEnumerable< Order > > GetOrdersAsync( params string[] orderIds )
         {
-            string methodParameters = string.Format( "{{docNumbers:{0}}}", "docNumbers.ToJson()" );
-            string mark = Guid.NewGuid().ToString();
-
             try
             {
+                var methodParameters = string.Format( "{{\"orderIds\":{0}}}", orderIds.ToJson() );
+                var mark = Guid.NewGuid().ToString();
+
                 JetLogger.LogTraceStarted( this.CreateMethodCallInfo( methodParameters, mark ) );
 
-                JetLogger.LogTraceEnded( this.CreateMethodCallInfo( methodParameters, mark, methodResult : "result.ToJson()" ) );
+                var orderUrls = await JetRestService.GetOrderUrlsAsync().ConfigureAwait( false );
+                var orders = await orderUrls.OrderUrls.ProcessInBatchAsync( _batchSize, async s => await JetRestService.GetOrderWithoutShipmentDetailAsync( s ).ConfigureAwait( false ) ).ConfigureAwait( false );
+                var ordersFiltered = orders.Where( x => orderIds.Contains( x.MerchantOrderId ) ).Select( Order.From ).ToList();
 
-                //todo: replace me
-                throw new NotImplementedException();
+                JetLogger.LogTraceEnded( this.CreateMethodCallInfo( methodParameters, mark, methodResult : ordersFiltered.ToJson() ) );
+
+                return ordersFiltered;
             }
             catch( Exception exception )
             {
@@ -139,10 +147,12 @@ namespace JetAccess
                 JetLogger.LogTraceStarted( this.CreateMethodCallInfo( methodParameters, mark ) );
 
                 var orderUrls = await JetRestService.GetOrderUrlsAsync().ConfigureAwait( false );
-                var orders = await orderUrls.OrderUrls.ProcessInBatchAsync(16, async s => await JetRestService.GetOrderWithoutShipmentDetailAsync(s).ConfigureAwait(false)).ConfigureAwait(false);
-                var ordersFiltered = orders.Where()
-                
-                JetLogger.LogTraceEnded( this.CreateMethodCallInfo( methodParameters, mark, methodResult : "result.ToJson()" ) );
+                var orders = await orderUrls.OrderUrls.ProcessInBatchAsync( _batchSize, async s => await JetRestService.GetOrderWithoutShipmentDetailAsync( s ).ConfigureAwait( false ) ).ConfigureAwait( false );
+                var ordersFiltered = orders.Select( Order.From ).ToList();
+
+                JetLogger.LogTraceEnded( this.CreateMethodCallInfo( methodParameters, mark, methodResult : ordersFiltered.ToJson() ) );
+
+                return ordersFiltered;
             }
             catch( Exception exception )
             {

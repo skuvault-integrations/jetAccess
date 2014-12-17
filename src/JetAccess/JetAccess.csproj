@@ -59,13 +59,13 @@
     <Compile Include="IJetFactory.cs" />
     <Compile Include="IJetService.cs" />
     <Compile Include="Misc\ICreateCallInfo.cs" />
+    <Compile Include="Misc\IJsonSerializable.cs" />
     <Compile Include="Models\GetOrders\Order.cs" />
     <Compile Include="Models\GetProducts\Product.cs" />
     <Compile Include="Models\JetUserCredentials.cs" />
     <Compile Include="Misc\ActionPolicies.cs" />
     <Compile Include="Misc\ExtensionsInternal.cs" />
     <Compile Include="Misc\ExtensionsPublic.cs" />
-    <Compile Include="Misc\IManualSerializable.cs" />
     <Compile Include="Misc\PredefinedValues.cs" />
     <Compile Include="Misc\JetLogger.cs" />
     <Compile Include="Models\Ping\PingInfo.cs" />

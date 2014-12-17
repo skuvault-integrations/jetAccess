@@ -11,7 +11,7 @@ namespace JetAccess
     public interface IJetService
     {
         Func< string > AdditionalLogInfo{ get; set; }
-        Task< IEnumerable< Order > > GetOrdersAsync( DateTime dateFrom, DateTime dateTo );
+        Task< IEnumerable< Order > > GetOrdersAsync( DateTime createDateFrom, DateTime createdDateTo );
 
         Task< IEnumerable< Order > > GetOrdersAsync();
 
@@ -21,6 +21,6 @@ namespace JetAccess
 
         Task< PingInfo > Ping();
 
-        Task< IEnumerable< Order > > GetOrdersAsync( params string[] docNumbers );
+        Task< IEnumerable< Order > > GetOrdersAsync( params string[] orderIds );
     }
 }

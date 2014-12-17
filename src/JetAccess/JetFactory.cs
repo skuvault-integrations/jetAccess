@@ -1,19 +1,22 @@
 ﻿using JetAccess.Models;
+using JetAccess.Services;
 
 namespace JetAccess
 {
     public class JetFactory: IJetFactory
     {
-        private readonly JetUserCredentials _nonAuthenticatedQuickBooksOnlineNonAuthenticatedUserCredentials;
+        private readonly JetUserCredentials _nonAuthenticatedJetUserCredentials;
+        private EndPoint _endPoint;
 
-        public JetFactory( JetUserCredentials quickBooksOnlineNonAuthenticatedUserCredentials )
+        public JetFactory( JetUserCredentials jetUserCredentials, EndPoint endPoint )
         {
-            _nonAuthenticatedQuickBooksOnlineNonAuthenticatedUserCredentials = quickBooksOnlineNonAuthenticatedUserCredentials;
+            _nonAuthenticatedJetUserCredentials = jetUserCredentials;
+            _endPoint = endPoint;
         }
 
-        public IJetService CreateService( JetUserCredentials userAuthCredentials )
+        public IJetService CreateService( JetUserCredentials userAuthCredentials, EndPoint endPoint )
         {
-            return new JetService( userAuthCredentials );
+            return new JetService( userAuthCredentials, endPoint );
         }
     }
 }
