@@ -53,6 +53,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Global\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="IJetFactory.cs" />
     <Compile Include="IJetService.cs" />
     <Compile Include="Misc\ICreateCallInfo.cs" />
