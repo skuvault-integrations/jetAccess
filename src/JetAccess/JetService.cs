@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Jet.Misc;
-using JetAccess;
+using JetAccess.Misc;
 using JetAccess.Models;
 using JetAccess.Models.GetOrders;
 using JetAccess.Models.GetProducts;
 using JetAccess.Models.Ping;
 using JetAccess.Models.UpdateInventory;
+using JetAccess.Services;
 
-namespace QuickBooksOnlineAccess
+namespace JetAccess
 {
-    public class JetService: IJetService
+    public class JetService: IJetService, ICreateCallInfo
     {
+        internal IJetRestService JetRestService{ get; set; }
+
         public JetService( JetUserCredentials quickBooksAuthenticatedUserCredentials )
         {
         }
@@ -29,12 +31,12 @@ namespace QuickBooksOnlineAccess
             }
             catch( Exception exception )
             {
-                var quickBooksException = new JetException( CreateMethodCallInfo(), exception );
+                var quickBooksException = new JetException( this.CreateMethodCallInfo(), exception );
                 JetLogger.LogTraceException( quickBooksException );
                 throw quickBooksException;
             }
         }
-        
+
         #region Inventory
         public async Task< IEnumerable< Product > > GetProductsAsync()
         {
@@ -42,16 +44,16 @@ namespace QuickBooksOnlineAccess
             string mark = Guid.NewGuid().ToString();
             try
             {
-                JetLogger.LogTraceStarted( CreateMethodCallInfo( methodParameters, mark ) );
+                JetLogger.LogTraceStarted( this.CreateMethodCallInfo( methodParameters, mark ) );
 
-                JetLogger.LogTraceEnded( CreateMethodCallInfo( methodParameters, mark, methodResult : "result.ToJson()" ) );
+                JetLogger.LogTraceEnded( this.CreateMethodCallInfo( methodParameters, mark, methodResult : "result.ToJson()" ) );
 
                 //todo: replace me
                 throw new NotImplementedException();
             }
             catch( Exception exception )
             {
-                var quickBooksException = new JetException( CreateMethodCallInfo(), exception );
+                var quickBooksException = new JetException( this.CreateMethodCallInfo(), exception );
                 JetLogger.LogTraceException( quickBooksException );
                 throw quickBooksException;
             }
@@ -63,19 +65,19 @@ namespace QuickBooksOnlineAccess
             string mark = Guid.NewGuid().ToString();
             try
             {
-                JetLogger.LogTraceStarted( CreateMethodCallInfo( methodParameters, mark ) );
+                JetLogger.LogTraceStarted( this.CreateMethodCallInfo( methodParameters, mark ) );
 
-                JetLogger.LogTraceEnded( CreateMethodCallInfo( methodParameters, mark, methodResult : PredefinedValues.NotAvailable ) );
+                JetLogger.LogTraceEnded( this.CreateMethodCallInfo( methodParameters, mark, methodResult : PredefinedValues.NotAvailable ) );
             }
             catch( Exception exception )
             {
-                var quickBooksException = new JetException( CreateMethodCallInfo(), exception );
+                var quickBooksException = new JetException( this.CreateMethodCallInfo(), exception );
                 JetLogger.LogTraceException( quickBooksException );
                 throw quickBooksException;
             }
         }
         #endregion
-        
+
         #region Orders
         public async Task< IEnumerable< Order > > GetOrdersAsync( DateTime dateFrom, DateTime dateTo )
         {
@@ -83,16 +85,16 @@ namespace QuickBooksOnlineAccess
             string mark = Guid.NewGuid().ToString();
             try
             {
-                JetLogger.LogTraceStarted( CreateMethodCallInfo( methodParameters, mark ) );
+                JetLogger.LogTraceStarted( this.CreateMethodCallInfo( methodParameters, mark ) );
 
-                JetLogger.LogTraceEnded( CreateMethodCallInfo( methodParameters, mark, methodResult : "result.ToJson()" ) );
+                JetLogger.LogTraceEnded( this.CreateMethodCallInfo( methodParameters, mark, methodResult : "result.ToJson()" ) );
 
                 //todo: replace me
                 throw new NotImplementedException();
             }
             catch( Exception exception )
             {
-                var quickBooksException = new JetException( CreateMethodCallInfo(), exception );
+                var quickBooksException = new JetException( this.CreateMethodCallInfo(), exception );
                 JetLogger.LogTraceException( quickBooksException );
                 throw quickBooksException;
             }
@@ -105,16 +107,16 @@ namespace QuickBooksOnlineAccess
 
             try
             {
-                JetLogger.LogTraceStarted( CreateMethodCallInfo( methodParameters, mark ) );
+                JetLogger.LogTraceStarted( this.CreateMethodCallInfo( methodParameters, mark ) );
 
-                JetLogger.LogTraceEnded( CreateMethodCallInfo( methodParameters, mark, methodResult : "result.ToJson()" ) );
+                JetLogger.LogTraceEnded( this.CreateMethodCallInfo( methodParameters, mark, methodResult : "result.ToJson()" ) );
 
                 //todo: replace me
                 throw new NotImplementedException();
             }
             catch( Exception exception )
             {
-                var quickBooksException = new JetException( CreateMethodCallInfo(), exception );
+                var quickBooksException = new JetException( this.CreateMethodCallInfo(), exception );
                 JetLogger.LogTraceException( quickBooksException );
                 throw quickBooksException;
             }
@@ -129,29 +131,29 @@ namespace QuickBooksOnlineAccess
             }
             catch( Exception exception )
             {
-                var quickBooksException = new JetException( CreateMethodCallInfo(), exception );
+                var quickBooksException = new JetException( this.CreateMethodCallInfo(), exception );
                 JetLogger.LogTraceException( quickBooksException );
                 throw quickBooksException;
             }
         }
         #endregion
 
-        private string CreateMethodCallInfo( string methodParameters = "", string mark = "", string errors = "",
-            string methodResult = "", string additionalInfo = "", [ CallerMemberName ] string memberName = "" )
-        {
-            string restInfo = " this._quickBooksOnlineServiceSdk.ToJson()";
-            string str = string.Format(
-                "{{MethodName:{0}, ConnectionInfo:{1}, MethodParameters:{2}, Mark:{3}{4}{5}{6}}}",
-                memberName,
-                restInfo,
-                methodParameters,
-                mark,
-                string.IsNullOrWhiteSpace( errors ) ? string.Empty : ", Errors:" + errors,
-                string.IsNullOrWhiteSpace( methodResult ) ? string.Empty : ", Result:" + methodResult,
-                string.IsNullOrWhiteSpace( additionalInfo ) ? string.Empty : ", " + additionalInfo
-                );
-            return str;
-        }
+        //private string CreateMethodCallInfo( string methodParameters = "", string mark = "", string errors = "",
+        //    string methodResult = "", string additionalInfo = "", [ CallerMemberName ] string memberName = "" )
+        //{
+        //    string restInfo = " this._quickBooksOnlineServiceSdk.ToJson()";
+        //    string str = string.Format(
+        //        "{{MethodName:{0}, ConnectionInfo:{1}, MethodParameters:{2}, Mark:{3}{4}{5}{6}}}",
+        //        memberName,
+        //        restInfo,
+        //        methodParameters,
+        //        mark,
+        //        string.IsNullOrWhiteSpace( errors ) ? string.Empty : ", Errors:" + errors,
+        //        string.IsNullOrWhiteSpace( methodResult ) ? string.Empty : ", Result:" + methodResult,
+        //        string.IsNullOrWhiteSpace( additionalInfo ) ? string.Empty : ", " + additionalInfo
+        //        );
+        //    return str;
+        //}
 
         private static void LogTraceException( string message, JetException ebayException )
         {

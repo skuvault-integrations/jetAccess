@@ -16,7 +16,7 @@ using JetAccess.Services.Parsers;
 
 namespace JetAccess.Services
 {
-    internal class JetRestService: ICreateCallInfo
+    internal class JetRestService: ICreateCallInfo, IJetRestService
     {
         protected JetUserCredentials _userCredentials;
         protected TokenInfo _token;

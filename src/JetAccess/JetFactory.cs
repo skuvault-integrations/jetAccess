@@ -1,5 +1,4 @@
 ﻿using JetAccess.Models;
-using QuickBooksOnlineAccess;
 
 namespace JetAccess
 {

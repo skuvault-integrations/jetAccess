@@ -72,6 +72,7 @@
     <Compile Include="Models\Services\JetRestService\GetToken\TokenInfo.cs" />
     <Compile Include="Models\Services\JetRestService\PutMerchantSkusInventory\FulfillmentNode.cs" />
     <Compile Include="Models\Services\JetRestService\PutMerchantSkusInventory\PutMerchantSkusInventoryResponse.cs" />
+    <Compile Include="Services\IJetRestService.cs" />
     <Compile Include="Services\Parsers\PutMerchantSkusInventoryResponseParser.cs" />
     <Compile Include="Models\UpdateInventory\Inventory.cs" />
     <Compile Include="JetException.cs" />
