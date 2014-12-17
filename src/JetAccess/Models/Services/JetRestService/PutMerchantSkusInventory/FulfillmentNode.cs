@@ -35,7 +35,7 @@ namespace JetAccess.Models.Services.JetRestService.PutMerchantSkusInventory
         {
             var strings = FulfillmentNodes.Select( x => x.ToJson() );
             var list = string.Join( ",", strings );
-            var obj = string.Format("{{\"fulfillment_nodes\":[{0}]}}", list);
+            var obj = string.Format( "{{\"fulfillment_nodes\":[{0}]}}", list );
             return obj;
         }
     }

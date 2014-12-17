@@ -34,7 +34,8 @@ namespace QuickBooksOnlineAccess
                 throw quickBooksException;
             }
         }
-
+        
+        #region Inventory
         public async Task< IEnumerable< Product > > GetProductsAsync()
         {
             string methodParameters = string.Format( "{{{0}}}", PredefinedValues.NotAvailable );
@@ -73,7 +74,8 @@ namespace QuickBooksOnlineAccess
                 throw quickBooksException;
             }
         }
-
+        #endregion
+        
         #region Orders
         public async Task< IEnumerable< Order > > GetOrdersAsync( DateTime dateFrom, DateTime dateTo )
         {

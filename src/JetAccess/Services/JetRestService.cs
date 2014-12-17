@@ -95,7 +95,7 @@ namespace JetAccess.Services
             var token = await GetTokenOrReturnChachedAsync().ConfigureAwait( false );
             var header = new Dictionary< string, string >() { { "Authorization", token.ToString() } };
             var body2 = putMerchantSkusInventoryRequest.ToJson();
-            var result = await InvokeCallAsync<PutMerchantSkusInventoryResponseParser, PutMerchantSkusInventoryResponse>(_endPoint.EndPointUrl + "/" + putMerchantSkusInventoryRequest.Id + "/inventory?", RequestType.PUT, mark, body: body2, rawHeaders: header).ConfigureAwait(false);
+            var result = await InvokeCallAsync< PutMerchantSkusInventoryResponseParser, PutMerchantSkusInventoryResponse >( _endPoint.EndPointUrl + "/" + putMerchantSkusInventoryRequest.Id + "/inventory?", RequestType.PUT, mark, body : body2, rawHeaders : header ).ConfigureAwait( false );
             return result;
         }
 
