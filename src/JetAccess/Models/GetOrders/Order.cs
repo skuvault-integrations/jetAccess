@@ -40,7 +40,7 @@ namespace JetAccess.Models.GetOrders
 
         public string ToJson()
         {
-            return string.Format("{{MerchantOrderId:\"{0}\", Created:\"{1}\", RequestOrderQuantity:\"{2}\"}}", this.MerchantOrderId, this.Created, this.OrderItems.ToJson());
+            return string.Format( "{{MerchantOrderId:\"{0}\", Created:\"{1}\", RequestOrderQuantity:\"{2}\"}}", this.MerchantOrderId, this.Created, this.OrderItems.ToJson() );
         }
     }
 

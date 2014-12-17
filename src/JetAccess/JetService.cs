@@ -39,9 +39,9 @@ namespace JetAccess
             }
             catch( Exception exception )
             {
-                var quickBooksException = new JetException( this.CreateMethodCallInfo(), exception );
-                JetLogger.LogTraceException( quickBooksException );
-                throw quickBooksException;
+                var jetException = new JetException( this.CreateMethodCallInfo(), exception );
+                JetLogger.LogTraceException( jetException );
+                throw jetException;
             }
         }
 
@@ -61,9 +61,9 @@ namespace JetAccess
             }
             catch( Exception exception )
             {
-                var quickBooksException = new JetException( this.CreateMethodCallInfo(), exception );
-                JetLogger.LogTraceException( quickBooksException );
-                throw quickBooksException;
+                var jetException = new JetException( this.CreateMethodCallInfo(), exception );
+                JetLogger.LogTraceException( jetException );
+                throw jetException;
             }
         }
 
@@ -79,9 +79,9 @@ namespace JetAccess
             }
             catch( Exception exception )
             {
-                var quickBooksException = new JetException( this.CreateMethodCallInfo(), exception );
-                JetLogger.LogTraceException( quickBooksException );
-                throw quickBooksException;
+                var jetException = new JetException( this.CreateMethodCallInfo(), exception );
+                JetLogger.LogTraceException( jetException );
+                throw jetException;
             }
         }
         #endregion
@@ -106,9 +106,9 @@ namespace JetAccess
             }
             catch( Exception exception )
             {
-                var quickBooksException = new JetException( this.CreateMethodCallInfo(), exception );
-                JetLogger.LogTraceException( quickBooksException );
-                throw quickBooksException;
+                var jetException = new JetException( this.CreateMethodCallInfo(), exception );
+                JetLogger.LogTraceException( jetException );
+                throw jetException;
             }
         }
 
@@ -131,9 +131,9 @@ namespace JetAccess
             }
             catch( Exception exception )
             {
-                var quickBooksException = new JetException( this.CreateMethodCallInfo(), exception );
-                JetLogger.LogTraceException( quickBooksException );
-                throw quickBooksException;
+                var jetException = new JetException( this.CreateMethodCallInfo(), exception );
+                JetLogger.LogTraceException( jetException );
+                throw jetException;
             }
         }
 
@@ -156,9 +156,9 @@ namespace JetAccess
             }
             catch( Exception exception )
             {
-                var quickBooksException = new JetException( this.CreateMethodCallInfo(), exception );
-                JetLogger.LogTraceException( quickBooksException );
-                throw quickBooksException;
+                var jetException = new JetException( this.CreateMethodCallInfo(), exception );
+                JetLogger.LogTraceException( jetException );
+                throw jetException;
             }
         }
         #endregion
