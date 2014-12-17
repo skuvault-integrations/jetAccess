@@ -138,23 +138,6 @@ namespace JetAccess
         }
         #endregion
 
-        //private string CreateMethodCallInfo( string methodParameters = "", string mark = "", string errors = "",
-        //    string methodResult = "", string additionalInfo = "", [ CallerMemberName ] string memberName = "" )
-        //{
-        //    string restInfo = " this._quickBooksOnlineServiceSdk.ToJson()";
-        //    string str = string.Format(
-        //        "{{MethodName:{0}, ConnectionInfo:{1}, MethodParameters:{2}, Mark:{3}{4}{5}{6}}}",
-        //        memberName,
-        //        restInfo,
-        //        methodParameters,
-        //        mark,
-        //        string.IsNullOrWhiteSpace( errors ) ? string.Empty : ", Errors:" + errors,
-        //        string.IsNullOrWhiteSpace( methodResult ) ? string.Empty : ", Result:" + methodResult,
-        //        string.IsNullOrWhiteSpace( additionalInfo ) ? string.Empty : ", " + additionalInfo
-        //        );
-        //    return str;
-        //}
-
         private static void LogTraceException( string message, JetException ebayException )
         {
             JetLogger.Log().Trace( ebayException, message );
