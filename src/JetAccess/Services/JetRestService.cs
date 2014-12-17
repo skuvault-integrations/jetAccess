@@ -144,7 +144,7 @@ namespace JetAccess.Services
         }
     }
 
-    internal sealed class EndPoint
+    public sealed class EndPoint
     {
         public static EndPoint Test = new EndPoint( "https://merchant-api.test.jet.com/api" );
         public static EndPoint Production = new EndPoint( "https://merchant-api.jet.com/api" );

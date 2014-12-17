@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Jet.Misc;
 using JetAccess.Misc;
@@ -9,15 +10,21 @@ using JetAccess.Models.GetProducts;
 using JetAccess.Models.Ping;
 using JetAccess.Models.UpdateInventory;
 using JetAccess.Services;
+using Netco.Extensions;
 
 namespace JetAccess
 {
     public class JetService: IJetService, ICreateCallInfo
     {
         internal IJetRestService JetRestService{ get; set; }
+        public JetUserCredentials JetUserCredentials{ get; set; }
+        public EndPoint EndPoint{ get; set; }
 
-        public JetService( JetUserCredentials quickBooksAuthenticatedUserCredentials )
+        public JetService( JetUserCredentials jetUserCredentials, EndPoint endPoint )
         {
+            JetUserCredentials = jetUserCredentials;
+            EndPoint = endPoint;
+            JetRestService = new JetRestService( jetUserCredentials, EndPoint );
         }
 
         public Func< string > AdditionalLogInfo{ get; set; }
@@ -126,8 +133,16 @@ namespace JetAccess
         {
             try
             {
-                //todo: replace me
-                throw new NotImplementedException();
+                var methodParameters = PredefinedValues.NotAvailable;
+                var mark = Guid.NewGuid().ToString();
+
+                JetLogger.LogTraceStarted( this.CreateMethodCallInfo( methodParameters, mark ) );
+
+                var orderUrls = await JetRestService.GetOrderUrlsAsync().ConfigureAwait( false );
+                var orders = await orderUrls.OrderUrls.ProcessInBatchAsync(16, async s => await JetRestService.GetOrderWithoutShipmentDetailAsync(s).ConfigureAwait(false)).ConfigureAwait(false);
+                var ordersFiltered = orders.Where()
+                
+                JetLogger.LogTraceEnded( this.CreateMethodCallInfo( methodParameters, mark, methodResult : "result.ToJson()" ) );
             }
             catch( Exception exception )
             {
