@@ -53,11 +53,18 @@ namespace JetAccess
             try
             {
                 JetLogger.LogTraceStarted( this.CreateMethodCallInfo( methodParameters, mark ) );
-                var products = JetRestService.GetProductUrlsAsync().ConfigureAwait( false );
-                JetLogger.LogTraceEnded( this.CreateMethodCallInfo( methodParameters, mark, methodResult : "result.ToJson()" ) );
+                var productUrls = await JetRestService.GetProductUrlsAsync().ConfigureAwait( false );
+                var products = await productUrls.SkuUrls.ProcessInBatchAsync( _batchSize, async ( x ) =>
+                {
+                    var inventory = await JetRestService.GetMerchantSkusInventoryAsync( x ).ConfigureAwait( false );
+                    return Tuple.Create( x, inventory );
+                } ).ConfigureAwait( false );
 
-                //todo: replace me
-                throw new NotImplementedException();
+                var res = products.Select( x => Product.From( x.Item2, x.Item1 ) ).ToList();
+
+                JetLogger.LogTraceEnded( this.CreateMethodCallInfo( methodParameters, mark, methodResult : res.ToJson() ) );
+
+                return res;
             }
             catch( Exception exception )
             {
