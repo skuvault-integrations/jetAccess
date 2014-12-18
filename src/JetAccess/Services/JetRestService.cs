@@ -9,7 +9,7 @@ using JetAccess.Models;
 using JetAccess.Models.Services.JetRestService.GetMerchantSkusInventory;
 using JetAccess.Models.Services.JetRestService.GetOrderIds;
 using JetAccess.Models.Services.JetRestService.GetOrderWithOutShipmentDetail;
-using JetAccess.Models.Services.JetRestService.GetProductsSkus;
+using JetAccess.Models.Services.JetRestService.GetProductUrls;
 using JetAccess.Models.Services.JetRestService.GetToken;
 using JetAccess.Models.Services.JetRestService.PutMerchantSkusInventory;
 using JetAccess.Services.Parsers;
@@ -69,12 +69,12 @@ namespace JetAccess.Services
             return result;
         }
 
-        public async Task< GetProductsResponse > GetProductsAsync()
+        public async Task< GetProductUrlsResponse > GetProductUrlsAsync()
         {
             var mark = Guid.NewGuid().ToString();
             var token = await GetTokenOrReturnChachedAsync().ConfigureAwait( false );
             var header = new Dictionary< string, string >() { { "Authorization", token.ToString() } };
-            var result = await InvokeCallAsync< GetProductsResponseParser, GetProductsResponse >( _endPoint.EndPointUrl + "/merchant-skus?", RequestType.GET, mark, rawHeaders : header ).ConfigureAwait( false );
+            var result = await InvokeCallAsync< GetProductUrlsResponseParser, GetProductUrlsResponse >( _endPoint.EndPointUrl + "/merchant-skus?", RequestType.GET, mark, rawHeaders : header ).ConfigureAwait( false );
             return result;
         }
 

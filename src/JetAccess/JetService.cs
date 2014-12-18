@@ -53,7 +53,7 @@ namespace JetAccess
             try
             {
                 JetLogger.LogTraceStarted( this.CreateMethodCallInfo( methodParameters, mark ) );
-
+                var products = JetRestService.GetProductUrlsAsync().ConfigureAwait( false );
                 JetLogger.LogTraceEnded( this.CreateMethodCallInfo( methodParameters, mark, methodResult : "result.ToJson()" ) );
 
                 //todo: replace me
@@ -162,6 +162,5 @@ namespace JetAccess
             }
         }
         #endregion
-
     }
 }

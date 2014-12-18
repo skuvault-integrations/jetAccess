@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace JetAccess.Models.Services.JetRestService.GetProductsSkus
+namespace JetAccess.Models.Services.JetRestService.GetProductUrls
 {
-    internal class GetProductsResponse
+    internal class GetProductUrlsResponse
     {
         public IEnumerable< string > SkuUrls{ get; private set; }
 
-        public GetProductsResponse( IEnumerable< string > orderUrls )
+        public GetProductUrlsResponse( IEnumerable< string > orderUrls )
         {
             if( orderUrls == null )
                 orderUrls = new string[ 0 ];

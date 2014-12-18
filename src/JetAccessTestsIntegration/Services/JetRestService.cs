@@ -70,7 +70,7 @@ namespace JetAccessTestsIntegration.Services
             var service = new JetRestService( _testDataReader.GetJetUserCredentials, EndPoint.Test );
 
             //------------ Act
-            var task = service.GetProductsAsync();
+            var task = service.GetProductUrlsAsync();
             task.Wait();
 
             //------------ Assert
@@ -84,7 +84,7 @@ namespace JetAccessTestsIntegration.Services
             var service = new JetRestService( _testDataReader.GetJetUserCredentials, EndPoint.Test );
 
             //------------ Act
-            var task = service.GetProductsAsync();
+            var task = service.GetProductUrlsAsync();
             task.Wait();
             var task2 = service.GetMerchantSkusInventoryAsync( task.Result.SkuUrls.First() );
             task2.Wait();
@@ -98,7 +98,7 @@ namespace JetAccessTestsIntegration.Services
         {
             //------------ Arrange
             var service = new JetRestService( _testDataReader.GetJetUserCredentials, EndPoint.Test );
-            var task1 = service.GetProductsAsync();
+            var task1 = service.GetProductUrlsAsync();
             task1.Wait();
             var task2 = service.GetMerchantSkusInventoryAsync( task1.Result.SkuUrls.First() );
             task2.Wait();
