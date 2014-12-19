@@ -8,6 +8,7 @@ using JetAccess.Models;
 using JetAccess.Models.GetOrders;
 using JetAccess.Models.GetProducts;
 using JetAccess.Models.Ping;
+using JetAccess.Models.Services.JetRestService.PutMerchantSkusInventory;
 using JetAccess.Models.UpdateInventory;
 using JetAccess.Services;
 using Netco.Extensions;
@@ -81,6 +82,8 @@ namespace JetAccess
             try
             {
                 JetLogger.LogTraceStarted( this.CreateMethodCallInfo( methodParameters, mark ) );
+
+                var updateResponse = await products.ProcessInBatchAsync( _batchSize, async x => await JetRestService.PutMerchantSkusInventoryAsync( PutMerchantSkusInventoryRequest.From( x ) ).ConfigureAwait( false ) ).ConfigureAwait( false );
 
                 JetLogger.LogTraceEnded( this.CreateMethodCallInfo( methodParameters, mark, methodResult : PredefinedValues.NotAvailable ) );
             }

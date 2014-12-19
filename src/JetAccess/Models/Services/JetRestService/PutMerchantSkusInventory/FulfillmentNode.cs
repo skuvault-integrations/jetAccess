@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using JetAccess.Models.UpdateInventory;
 
 namespace JetAccess.Models.Services.JetRestService.PutMerchantSkusInventory
 {
@@ -17,6 +18,12 @@ namespace JetAccess.Models.Services.JetRestService.PutMerchantSkusInventory
         public string ToJson()
         {
             return string.Format( "{{\"fulfillment_node_id\":\"{0}\",\"quantity\":{1}}}", this.FulfillmentNodeId, this.Quantity );
+        }
+
+        internal static FulfillmentNode From( FulfillmentNode2 fulfillmentNode2 )
+        {
+            var res = new FulfillmentNode( fulfillmentNode2.FulfillmentNodeId, fulfillmentNode2.Quantity );
+            return res;
         }
     }
 
@@ -37,6 +44,14 @@ namespace JetAccess.Models.Services.JetRestService.PutMerchantSkusInventory
             var list = string.Join( ",", strings );
             var obj = string.Format( "{{\"fulfillment_nodes\":[{0}]}}", list );
             return obj;
+        }
+
+        internal static PutMerchantSkusInventoryRequest From( Inventory o )
+        {
+            var id = o.Id;
+            var inventories = o.Nodes.Select( FulfillmentNode.From ).ToList();
+            var res = new PutMerchantSkusInventoryRequest( id, inventories );
+            return res;
         }
     }
 }
