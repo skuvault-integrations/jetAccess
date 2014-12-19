@@ -35,8 +35,9 @@ namespace JetAccess
         {
             try
             {
-                //todo: replace me
-                throw new NotImplementedException();
+                var getTokenResponse = await JetRestService.GetTokenAsync().ConfigureAwait( false );
+                var pingInfo = new PingInfo( !string.IsNullOrWhiteSpace( getTokenResponse.TokenInfo.Token ) && !string.IsNullOrWhiteSpace( getTokenResponse.TokenInfo.TokenType ) );
+                return pingInfo;
             }
             catch( Exception exception )
             {
