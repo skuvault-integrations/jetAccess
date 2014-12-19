@@ -1,17 +1,28 @@
 ﻿using System.Collections.Generic;
-using JetAccess.Models.Services.JetRestService.PutMerchantSkusInventory;
 
 namespace JetAccess.Models.UpdateInventory
 {
     public class Inventory
     {
-        public string Id{ get; set; }
-        public IEnumerable< FulfillmentNode2 > Nodes{ get; set; }
+        public Inventory( string id, IEnumerable< FulfillmentNode > nodes3 )
+        {
+            Id = id;
+            Nodes = nodes3;
+        }
+
+        public string Id{ get; private set; }
+        public IEnumerable< FulfillmentNode > Nodes{ get; private set; }
     }
 
-    public class FulfillmentNode2
+    public class FulfillmentNode
     {
-        public string FulfillmentNodeId{ get; set; }
-        public decimal Quantity{ get; set; }
+        public FulfillmentNode( decimal quantity, string fulfillmentNodeId )
+        {
+            FulfillmentNodeId = fulfillmentNodeId;
+            Quantity = quantity;
+        }
+
+        public string FulfillmentNodeId{ get; private set; }
+        public decimal Quantity{ get; private set; }
     }
 }

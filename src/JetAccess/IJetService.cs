@@ -19,8 +19,7 @@ namespace JetAccess
 
         Task< IEnumerable< Product > > GetProductsAsync();
 
-        Task< PingInfo > Ping();
-
         Task< IEnumerable< Order > > GetOrdersAsync( params string[] orderIds );
+        Task< PingInfo > Ping();
     }
 }

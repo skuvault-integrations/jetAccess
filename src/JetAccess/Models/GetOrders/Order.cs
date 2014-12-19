@@ -3,12 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using JetAccess.Misc;
 using JetAccess.Models.Services.JetRestService.GetOrderWithOutShipmentDetail;
+using JetAccess.Models.Services.JetRestService.GetOrderWithShipmentDetail;
+using OrderItem = JetAccess.Models.Services.JetRestService.GetOrderWithOutShipmentDetail.OrderItem;
 
 namespace JetAccess.Models.GetOrders
 {
     public class Order: IJsonSerializable
     {
         internal static Order From( GetOrderWithoutShipmentDetailResponse getOrderWithoutShipmentDetailResponse )
+        {
+            var order = new Order
+            {
+                Created = getOrderWithoutShipmentDetailResponse.Created,
+                FulFillmentNode = getOrderWithoutShipmentDetailResponse.FulFillmentNode,
+                MerchantOrderId = getOrderWithoutShipmentDetailResponse.MerchantOrderId,
+                OrderPlacedDate = getOrderWithoutShipmentDetailResponse.OrderPlacedDate,
+                OrderTransmitionDate = getOrderWithoutShipmentDetailResponse.OrderTransmitionDate,
+                ReferenceOrderId = getOrderWithoutShipmentDetailResponse.ReferenceOrderId,
+                OrderItems = getOrderWithoutShipmentDetailResponse.OrderItems.Select( OrderLineItem.From ).ToList(),
+            };
+
+            return order;
+        }
+
+        internal static Order From( GetOrderWithShipmentDetailResponse getOrderWithoutShipmentDetailResponse )
         {
             var order = new Order
             {
@@ -47,6 +65,24 @@ namespace JetAccess.Models.GetOrders
     public class OrderLineItem: IJsonSerializable
     {
         internal static OrderLineItem From( OrderItem getOrderWithoutShipmentDetailResponse )
+        {
+            var orderLineItem = new OrderLineItem
+            {
+                BasePrice = getOrderWithoutShipmentDetailResponse.BasePrice,
+                ItemShippingCost = getOrderWithoutShipmentDetailResponse.ItemShippingCost,
+                ItemShippingTax = getOrderWithoutShipmentDetailResponse.ItemShippingTax,
+                ItemTax = getOrderWithoutShipmentDetailResponse.ItemTax,
+                MerchantSku = getOrderWithoutShipmentDetailResponse.MerchantSku,
+                OrderItemId = getOrderWithoutShipmentDetailResponse.OrderItemId,
+                ProductTitle = getOrderWithoutShipmentDetailResponse.ProductTitle,
+                RequestOrderQuantity = getOrderWithoutShipmentDetailResponse.RequestOrderQuantity,
+                Url = getOrderWithoutShipmentDetailResponse.Url
+            };
+
+            return orderLineItem;
+        }
+
+        internal static OrderLineItem From( Services.JetRestService.GetOrderWithShipmentDetail.OrderItem getOrderWithoutShipmentDetailResponse )
         {
             var orderLineItem = new OrderLineItem
             {

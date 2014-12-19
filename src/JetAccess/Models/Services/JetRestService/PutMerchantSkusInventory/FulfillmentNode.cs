@@ -20,9 +20,9 @@ namespace JetAccess.Models.Services.JetRestService.PutMerchantSkusInventory
             return string.Format( "{{\"fulfillment_node_id\":\"{0}\",\"quantity\":{1}}}", this.FulfillmentNodeId, this.Quantity );
         }
 
-        internal static FulfillmentNode From( FulfillmentNode2 fulfillmentNode2 )
+        internal static FulfillmentNode From( UpdateInventory.FulfillmentNode fulfillmentNode )
         {
-            var res = new FulfillmentNode( fulfillmentNode2.FulfillmentNodeId, fulfillmentNode2.Quantity );
+            var res = new FulfillmentNode( fulfillmentNode.FulfillmentNodeId, fulfillmentNode.Quantity );
             return res;
         }
     }

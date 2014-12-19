@@ -5,7 +5,8 @@ namespace JetAccess.Models.Services.JetRestService.GetOrderIds
 {
     internal class GetOrderUrlsResponse
     {
-        public IEnumerable< string > OrderUrls{ get; private set; }
+        //public IEnumerable< string > OrderUrls{ get; private set; }
+        public IEnumerable< string > OrderUrls{ get;  set; }
 
         public GetOrderUrlsResponse( IEnumerable< string > orderUrls )
         {

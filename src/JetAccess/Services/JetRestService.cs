@@ -9,6 +9,7 @@ using JetAccess.Models;
 using JetAccess.Models.Services.JetRestService.GetMerchantSkusInventory;
 using JetAccess.Models.Services.JetRestService.GetOrderIds;
 using JetAccess.Models.Services.JetRestService.GetOrderWithOutShipmentDetail;
+using JetAccess.Models.Services.JetRestService.GetOrderWithShipmentDetail;
 using JetAccess.Models.Services.JetRestService.GetProductUrls;
 using JetAccess.Models.Services.JetRestService.GetToken;
 using JetAccess.Models.Services.JetRestService.PutMerchantSkusInventory;
@@ -96,6 +97,17 @@ namespace JetAccess.Services
             var header = new Dictionary< string, string >() { { "Authorization", token.ToString() } };
             var body2 = putMerchantSkusInventoryRequest.ToJson();
             var result = await InvokeCallAsync< PutMerchantSkusInventoryResponseParser, PutMerchantSkusInventoryResponse >( _endPoint.EndPointUrl + "/" + putMerchantSkusInventoryRequest.Id + "/inventory?", RequestType.PUT, mark, body : body2, rawHeaders : header ).ConfigureAwait( false );
+            return result;
+        }
+
+        public async Task<GetOrderWithShipmentDetailResponse> GetOrderWithShipmentDetailAsync(string orderUrl)
+        {
+            Condition.Requires(orderUrl).IsNotNullOrWhiteSpace();
+
+            var mark = Guid.NewGuid().ToString();
+            var token = await GetTokenOrReturnChachedAsync().ConfigureAwait(false);
+            var header = new Dictionary<string, string>() { { "Authorization", token.ToString() } };
+            var result = await InvokeCallAsync<GetOrderWithShipmentDetailResponseParser, GetOrderWithShipmentDetailResponse>(_endPoint.EndPointUrl + orderUrl, RequestType.GET, mark, rawHeaders: header).ConfigureAwait(false);
             return result;
         }
 

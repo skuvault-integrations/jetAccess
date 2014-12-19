@@ -158,12 +158,22 @@ namespace JetAccess
                 JetLogger.LogTraceStarted( this.CreateMethodCallInfo( methodParameters, mark ) );
 
                 var orderUrls = await JetRestService.GetOrderUrlsAsync().ConfigureAwait( false );
-                var orders = await orderUrls.OrderUrls.ProcessInBatchAsync( _batchSize, async s => await JetRestService.GetOrderWithoutShipmentDetailAsync( s ).ConfigureAwait( false ) ).ConfigureAwait( false );
-                var ordersFiltered = orders.Select( Order.From ).ToList();
 
-                JetLogger.LogTraceEnded( this.CreateMethodCallInfo( methodParameters, mark, methodResult : ordersFiltered.ToJson() ) );
+                var orderUrlsWithoutShippingDetails = orderUrls.OrderUrls.Where( x => x.Contains( "witho" ) ).ToList();
+                //var orderUrlsWithShippingDetails = orderUrls.OrderUrls = orderUrls.OrderUrls.Where( x => x.Contains( "withS" ) ).ToList();
 
-                return ordersFiltered;
+                var ordersWithoutShippingDetails = await orderUrlsWithoutShippingDetails.ProcessInBatchAsync( _batchSize, async s => await JetRestService.GetOrderWithoutShipmentDetailAsync( s ).ConfigureAwait( false ) ).ConfigureAwait( false );
+                //var ordersWithShippingDetails = await orderUrlsWithShippingDetails.ProcessInBatchAsync( _batchSize, async s => await JetRestService.GetOrderWithShipmentDetailAsync( s ).ConfigureAwait( false ) ).ConfigureAwait( false );
+
+                var ordersFilteredWithoutShippedDetails = ordersWithoutShippingDetails.Select( Order.From ).ToList();
+                //var ordersFilteredWithShippedDetails = ordersWithShippingDetails.Select( Order.From ).ToList();
+
+                var orders = new List< Order >( ordersFilteredWithoutShippedDetails );
+                //orders.AddRange( ordersFilteredWithShippedDetails );
+
+                JetLogger.LogTraceEnded( this.CreateMethodCallInfo( methodParameters, mark, methodResult : orders.ToJson() ) );
+
+                return orders;
             }
             catch( Exception exception )
             {
