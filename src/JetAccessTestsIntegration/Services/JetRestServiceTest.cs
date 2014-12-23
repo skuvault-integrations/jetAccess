@@ -64,7 +64,7 @@ namespace JetAccessTestsIntegration.Services
 		}
 
 		[ Test ]
-		public void GetProducts_PasswordsAndConnectionAreGood_ProductsUrlsReceived()
+		public void GetProductUrls_PasswordsAndConnectionAreGood_ProductsUrlsReceived()
 		{
 			//------------ Arrange
 			var service = new JetRestService( _testDataReader.GetJetUserCredentials, EndPoint.Test );
