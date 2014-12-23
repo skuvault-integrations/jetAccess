@@ -17,155 +17,155 @@ using JetAccess.Services.Parsers;
 
 namespace JetAccess.Services
 {
-    internal class JetRestService: ICreateCallInfo, IJetRestService
-    {
-        protected JetUserCredentials _userCredentials;
-        protected TokenInfo _token;
-        protected EndPoint _endPoint;
-        public IWebRequestServices WebRequestServices{ get; set; }
+	internal class JetRestService: ICreateCallInfo, IJetRestService
+	{
+		protected JetUserCredentials _userCredentials;
+		protected TokenInfo _token;
+		protected EndPoint _endPoint;
+		public IWebRequestServices WebRequestServices{ get; set; }
 
-        public JetRestService( JetUserCredentials userCredentials, EndPoint endPoint )
-        {
-            _userCredentials = userCredentials;
-            _endPoint = endPoint;
-            WebRequestServices = new WebRequestServices();
-        }
+		public JetRestService( JetUserCredentials userCredentials, EndPoint endPoint )
+		{
+			_userCredentials = userCredentials;
+			_endPoint = endPoint;
+			WebRequestServices = new WebRequestServices();
+		}
 
-        public async Task< TokenInfo > GetTokenOrReturnChachedAsync()
-        {
-            if( _token == null )
-            {
-                var res = await GetTokenAsync().ConfigureAwait( false );
-                _token = res.TokenInfo;
-            }
+		public async Task< TokenInfo > GetTokenOrReturnChachedAsync()
+		{
+			if( _token == null )
+			{
+				var res = await GetTokenAsync().ConfigureAwait( false );
+				_token = res.TokenInfo;
+			}
 
-            return _token;
-        }
+			return _token;
+		}
 
-        public async Task< GetTokenResponse > GetTokenAsync()
-        {
-            var mark = Guid.NewGuid().ToString();
-            var body = string.Format( "{{\"user\":\"{0}\",\"pass\":\"{1}\"}}", _userCredentials.ApiUser, _userCredentials.Secret );
-            var result = await InvokeCallAsync< GetTokenResponseParser, GetTokenResponse >( _endPoint.EndPointUrl + "/token/", RequestType.POST, mark, body ).ConfigureAwait( false );
-            return result;
-        }
+		public async Task< GetTokenResponse > GetTokenAsync()
+		{
+			var mark = Guid.NewGuid().ToString();
+			var body = string.Format( "{{\"user\":\"{0}\",\"pass\":\"{1}\"}}", _userCredentials.ApiUser, _userCredentials.Secret );
+			var result = await InvokeCallAsync< GetTokenResponseParser, GetTokenResponse >( _endPoint.EndPointUrl + "/token/", RequestType.POST, mark, body ).ConfigureAwait( false );
+			return result;
+		}
 
-        public async Task< GetOrderUrlsResponse > GetOrderUrlsAsync()
-        {
-            var mark = Guid.NewGuid().ToString();
-            var token = await GetTokenOrReturnChachedAsync().ConfigureAwait( false );
-            var header = new Dictionary< string, string >() { { "Authorization", token.ToString() } };
-            var result = await InvokeCallAsync< GetOrderUrlsResponseParser, GetOrderUrlsResponse >( _endPoint.EndPointUrl + "/orders/ready?", RequestType.GET, mark, rawHeaders : header ).ConfigureAwait( false );
-            return result;
-        }
+		public async Task< GetOrderUrlsResponse > GetOrderUrlsAsync()
+		{
+			var mark = Guid.NewGuid().ToString();
+			var token = await GetTokenOrReturnChachedAsync().ConfigureAwait( false );
+			var header = new Dictionary< string, string >() { { "Authorization", token.ToString() } };
+			var result = await InvokeCallAsync< GetOrderUrlsResponseParser, GetOrderUrlsResponse >( _endPoint.EndPointUrl + "/orders/ready?", RequestType.GET, mark, rawHeaders : header ).ConfigureAwait( false );
+			return result;
+		}
 
-        public async Task< GetOrderWithoutShipmentDetailResponse > GetOrderWithoutShipmentDetailAsync( string orderUrl )
-        {
-            Condition.Requires( orderUrl ).IsNotNullOrWhiteSpace();
+		public async Task< GetOrderWithoutShipmentDetailResponse > GetOrderWithoutShipmentDetailAsync( string orderUrl )
+		{
+			Condition.Requires( orderUrl ).IsNotNullOrWhiteSpace();
 
-            var mark = Guid.NewGuid().ToString();
-            var token = await GetTokenOrReturnChachedAsync().ConfigureAwait( false );
-            var header = new Dictionary< string, string >() { { "Authorization", token.ToString() } };
-            var result = await InvokeCallAsync< GetOrderWithoutShipmentDetailResponseParser, GetOrderWithoutShipmentDetailResponse >( _endPoint.EndPointUrl + orderUrl, RequestType.GET, mark, rawHeaders : header ).ConfigureAwait( false );
-            return result;
-        }
+			var mark = Guid.NewGuid().ToString();
+			var token = await GetTokenOrReturnChachedAsync().ConfigureAwait( false );
+			var header = new Dictionary< string, string >() { { "Authorization", token.ToString() } };
+			var result = await InvokeCallAsync< GetOrderWithoutShipmentDetailResponseParser, GetOrderWithoutShipmentDetailResponse >( _endPoint.EndPointUrl + orderUrl, RequestType.GET, mark, rawHeaders : header ).ConfigureAwait( false );
+			return result;
+		}
 
-        public async Task< GetProductUrlsResponse > GetProductUrlsAsync()
-        {
-            var mark = Guid.NewGuid().ToString();
-            var token = await GetTokenOrReturnChachedAsync().ConfigureAwait( false );
-            var header = new Dictionary< string, string >() { { "Authorization", token.ToString() } };
-            var result = await InvokeCallAsync< GetProductUrlsResponseParser, GetProductUrlsResponse >( _endPoint.EndPointUrl + "/merchant-skus?", RequestType.GET, mark, rawHeaders : header ).ConfigureAwait( false );
-            return result;
-        }
+		public async Task< GetProductUrlsResponse > GetProductUrlsAsync()
+		{
+			var mark = Guid.NewGuid().ToString();
+			var token = await GetTokenOrReturnChachedAsync().ConfigureAwait( false );
+			var header = new Dictionary< string, string >() { { "Authorization", token.ToString() } };
+			var result = await InvokeCallAsync< GetProductUrlsResponseParser, GetProductUrlsResponse >( _endPoint.EndPointUrl + "/merchant-skus?", RequestType.GET, mark, rawHeaders : header ).ConfigureAwait( false );
+			return result;
+		}
 
-        public async Task< GetMerchantSkusInventoryResponse > GetMerchantSkusInventoryAsync( string productUrl )
-        {
-            Condition.Requires( productUrl ).IsNotNullOrWhiteSpace();
+		public async Task< GetMerchantSkusInventoryResponse > GetMerchantSkusInventoryAsync( string productUrl )
+		{
+			Condition.Requires( productUrl ).IsNotNullOrWhiteSpace();
 
-            var mark = Guid.NewGuid().ToString();
-            var token = await GetTokenOrReturnChachedAsync().ConfigureAwait( false );
-            var header = new Dictionary< string, string >() { { "Authorization", token.ToString() } };
-            var result = await InvokeCallAsync< GetMerchantSkusInventoryResponseParser, GetMerchantSkusInventoryResponse >( _endPoint.EndPointUrl + "/" + productUrl + "/inventory?", RequestType.GET, mark, rawHeaders : header ).ConfigureAwait( false );
-            return result;
-        }
+			var mark = Guid.NewGuid().ToString();
+			var token = await GetTokenOrReturnChachedAsync().ConfigureAwait( false );
+			var header = new Dictionary< string, string >() { { "Authorization", token.ToString() } };
+			var result = await InvokeCallAsync< GetMerchantSkusInventoryResponseParser, GetMerchantSkusInventoryResponse >( _endPoint.EndPointUrl + "/" + productUrl + "/inventory?", RequestType.GET, mark, rawHeaders : header ).ConfigureAwait( false );
+			return result;
+		}
 
-        public async Task< PutMerchantSkusInventoryResponse > PutMerchantSkusInventoryAsync( PutMerchantSkusInventoryRequest putMerchantSkusInventoryRequest )
-        {
-            var mark = Guid.NewGuid().ToString();
-            var token = await GetTokenOrReturnChachedAsync().ConfigureAwait( false );
-            var header = new Dictionary< string, string >() { { "Authorization", token.ToString() } };
-            var body2 = putMerchantSkusInventoryRequest.ToJson();
-            var result = await InvokeCallAsync< PutMerchantSkusInventoryResponseParser, PutMerchantSkusInventoryResponse >( _endPoint.EndPointUrl + "/" + putMerchantSkusInventoryRequest.Id + "/inventory?", RequestType.PUT, mark, body : body2, rawHeaders : header ).ConfigureAwait( false );
-            return result;
-        }
+		public async Task< PutMerchantSkusInventoryResponse > PutMerchantSkusInventoryAsync( PutMerchantSkusInventoryRequest putMerchantSkusInventoryRequest )
+		{
+			var mark = Guid.NewGuid().ToString();
+			var token = await GetTokenOrReturnChachedAsync().ConfigureAwait( false );
+			var header = new Dictionary< string, string >() { { "Authorization", token.ToString() } };
+			var body2 = putMerchantSkusInventoryRequest.ToJson();
+			var result = await InvokeCallAsync< PutMerchantSkusInventoryResponseParser, PutMerchantSkusInventoryResponse >( _endPoint.EndPointUrl + "/" + putMerchantSkusInventoryRequest.Id + "/inventory?", RequestType.PUT, mark, body : body2, rawHeaders : header ).ConfigureAwait( false );
+			return result;
+		}
 
-        public async Task<GetOrderWithShipmentDetailResponse> GetOrderWithShipmentDetailAsync(string orderUrl)
-        {
-            Condition.Requires(orderUrl).IsNotNullOrWhiteSpace();
+		public async Task< GetOrderWithShipmentDetailResponse > GetOrderWithShipmentDetailAsync( string orderUrl )
+		{
+			Condition.Requires( orderUrl ).IsNotNullOrWhiteSpace();
 
-            var mark = Guid.NewGuid().ToString();
-            var token = await GetTokenOrReturnChachedAsync().ConfigureAwait(false);
-            var header = new Dictionary<string, string>() { { "Authorization", token.ToString() } };
-            var result = await InvokeCallAsync<GetOrderWithShipmentDetailResponseParser, GetOrderWithShipmentDetailResponse>(_endPoint.EndPointUrl + orderUrl, RequestType.GET, mark, rawHeaders: header).ConfigureAwait(false);
-            return result;
-        }
+			var mark = Guid.NewGuid().ToString();
+			var token = await GetTokenOrReturnChachedAsync().ConfigureAwait( false );
+			var header = new Dictionary< string, string >() { { "Authorization", token.ToString() } };
+			var result = await InvokeCallAsync< GetOrderWithShipmentDetailResponseParser, GetOrderWithShipmentDetailResponse >( _endPoint.EndPointUrl + orderUrl, RequestType.GET, mark, rawHeaders : header ).ConfigureAwait( false );
+			return result;
+		}
 
-        protected sealed class RequestType
-        {
-            public static RequestType GET = new RequestType( "GET" );
-            public static RequestType POST = new RequestType( "POST" );
-            public static RequestType PUT = new RequestType( "PUT" );
+		protected sealed class RequestType
+		{
+			public static RequestType GET = new RequestType( "GET" );
+			public static RequestType POST = new RequestType( "POST" );
+			public static RequestType PUT = new RequestType( "PUT" );
 
-            public String Type{ get; private set; }
+			public String Type{ get; private set; }
 
-            private RequestType( string type )
-            {
-                Type = type;
-            }
-        }
+			private RequestType( string type )
+			{
+				Type = type;
+			}
+		}
 
-        protected async Task< TParsed > InvokeCallAsync< TParser, TParsed >( string partialUrl, RequestType requestType, string mark, string body = null, Dictionary< string, string > rawHeaders = null ) where TParser : IResponseParser< TParsed >, new()
-        {
-            var res = default( TParsed );
-            try
-            {
-                await ActionPolicies.GetAsync.Do( async () =>
-                {
-                    WebRequest webRequest;
-                    if( requestType == RequestType.POST )
-                        webRequest = await WebRequestServices.CreatePostRequestAsync( partialUrl, body, rawHeaders ).ConfigureAwait( false );
-                    else if( requestType == RequestType.GET )
-                        webRequest = await WebRequestServices.CreateGetRequestAsync( partialUrl, body, rawHeaders ).ConfigureAwait( false );
-                    else if( requestType == RequestType.PUT )
-                        webRequest = await WebRequestServices.CreatePutRequestAsync( partialUrl, body, rawHeaders ).ConfigureAwait( false );
-                    else
-                        webRequest = await WebRequestServices.CreateGetRequestAsync( partialUrl, body, rawHeaders ).ConfigureAwait( false );
+		protected async Task< TParsed > InvokeCallAsync< TParser, TParsed >( string partialUrl, RequestType requestType, string mark, string body = null, Dictionary< string, string > rawHeaders = null ) where TParser : IResponseParser< TParsed >, new()
+		{
+			var res = default( TParsed );
+			try
+			{
+				await ActionPolicies.GetAsync.Do( async () =>
+				{
+					WebRequest webRequest;
+					if( requestType == RequestType.POST )
+						webRequest = await WebRequestServices.CreatePostRequestAsync( partialUrl, body, rawHeaders ).ConfigureAwait( false );
+					else if( requestType == RequestType.GET )
+						webRequest = await WebRequestServices.CreateGetRequestAsync( partialUrl, body, rawHeaders ).ConfigureAwait( false );
+					else if( requestType == RequestType.PUT )
+						webRequest = await WebRequestServices.CreatePutRequestAsync( partialUrl, body, rawHeaders ).ConfigureAwait( false );
+					else
+						webRequest = await WebRequestServices.CreateGetRequestAsync( partialUrl, body, rawHeaders ).ConfigureAwait( false );
 
-                    using( var memStream = await this.WebRequestServices.GetResponseStreamAsync( webRequest ).ConfigureAwait( false ) )
-                        res = new TParser().Parse( memStream, false );
-                } ).ConfigureAwait( false );
+					using( var memStream = await this.WebRequestServices.GetResponseStreamAsync( webRequest ).ConfigureAwait( false ) )
+						res = new TParser().Parse( memStream, false );
+				} ).ConfigureAwait( false );
 
-                return res;
-            }
-            catch( Exception exception )
-            {
-                var parameters = string.Format( "{{Url:{0}, Body:{1}, Headers:{2}}}", partialUrl, body ?? PredefinedValues.NotAvailable, rawHeaders.ToJson() );
-                throw new Exception( string.Format( "Exception occured. {0}", this.CreateMethodCallInfo( parameters, mark ) ), exception );
-            }
-        }
-    }
+				return res;
+			}
+			catch( Exception exception )
+			{
+				var parameters = string.Format( "{{Url:{0}, Body:{1}, Headers:{2}}}", partialUrl, body ?? PredefinedValues.NotAvailable, rawHeaders.ToJson() );
+				throw new Exception( string.Format( "Exception occured. {0}", this.CreateMethodCallInfo( parameters, mark ) ), exception );
+			}
+		}
+	}
 
-    public sealed class EndPoint
-    {
-        public static EndPoint Test = new EndPoint( "https://merchant-api.test.jet.com/api" );
-        public static EndPoint Production = new EndPoint( "https://merchant-api.jet.com/api" );
+	public sealed class EndPoint
+	{
+		public static EndPoint Test = new EndPoint( "https://merchant-api.test.jet.com/api" );
+		public static EndPoint Production = new EndPoint( "https://merchant-api.jet.com/api" );
 
-        public String EndPointUrl{ get; private set; }
+		public String EndPointUrl{ get; private set; }
 
-        private EndPoint( string endPointUrl )
-        {
-            EndPointUrl = endPointUrl;
-        }
-    }
+		private EndPoint( string endPointUrl )
+		{
+			EndPointUrl = endPointUrl;
+		}
+	}
 }

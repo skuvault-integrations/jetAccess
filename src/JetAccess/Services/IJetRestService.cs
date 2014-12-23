@@ -9,16 +9,15 @@ using JetAccess.Models.Services.JetRestService.PutMerchantSkusInventory;
 
 namespace JetAccess.Services
 {
-    internal interface IJetRestService
-    {
-        Task< TokenInfo > GetTokenOrReturnChachedAsync();
-        Task< GetTokenResponse > GetTokenAsync();
-        Task< GetOrderUrlsResponse > GetOrderUrlsAsync();
-        Task< GetOrderWithoutShipmentDetailResponse > GetOrderWithoutShipmentDetailAsync( string orderUrl );
-        Task< GetProductUrlsResponse > GetProductUrlsAsync();
-        Task< GetMerchantSkusInventoryResponse > GetMerchantSkusInventoryAsync( string productUrl );
-        Task< PutMerchantSkusInventoryResponse > PutMerchantSkusInventoryAsync( PutMerchantSkusInventoryRequest putMerchantSkusInventoryRequest );
-        Task<GetOrderWithShipmentDetailResponse> GetOrderWithShipmentDetailAsync(string s);
-    }
-
+	internal interface IJetRestService
+	{
+		Task< TokenInfo > GetTokenOrReturnChachedAsync();
+		Task< GetTokenResponse > GetTokenAsync();
+		Task< GetOrderUrlsResponse > GetOrderUrlsAsync();
+		Task< GetOrderWithoutShipmentDetailResponse > GetOrderWithoutShipmentDetailAsync( string orderUrl );
+		Task< GetProductUrlsResponse > GetProductUrlsAsync();
+		Task< GetMerchantSkusInventoryResponse > GetMerchantSkusInventoryAsync( string productUrl );
+		Task< PutMerchantSkusInventoryResponse > PutMerchantSkusInventoryAsync( PutMerchantSkusInventoryRequest putMerchantSkusInventoryRequest );
+		Task< GetOrderWithShipmentDetailResponse > GetOrderWithShipmentDetailAsync( string s );
+	}
 }
