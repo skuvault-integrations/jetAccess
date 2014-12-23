@@ -65,7 +65,7 @@ namespace JetAccessTestsIntegration
         }
 
         [ Test ]
-        public void PutMerchantSkusInventory_PasswordsAndConnectionAreGood_ProductsInventoryUpdated()
+		public void UpdateInventoryAsync_PasswordsAndConnectionAreGood_ProductsInventoryUpdated()
         {
             //------------ Arrange
             var service = new JetService( _testDataReader.GetJetUserCredentials, EndPoint.Test );
