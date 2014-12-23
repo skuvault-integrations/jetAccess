@@ -63,9 +63,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="JetSerice.cs" />
+    <Compile Include="JetServiceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\JetRestService.cs" />
+    <Compile Include="Services\JetRestServiceTest.cs" />
     <Compile Include="TestEnvironment\FlatCsvLineAppKeys.cs" />
     <Compile Include="TestEnvironment\TestDataReader.cs" />
   </ItemGroup>
