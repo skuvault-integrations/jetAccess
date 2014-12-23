@@ -86,7 +86,7 @@ namespace JetAccess.Services
 			var mark = Guid.NewGuid().ToString();
 			var token = await GetTokenOrReturnChachedAsync().ConfigureAwait( false );
 			var header = new Dictionary< string, string >() { { "Authorization", token.ToString() } };
-			var result = await InvokeCallAsync< GetMerchantSkusInventoryResponseParser, GetMerchantSkusInventoryResponse >( _endPoint.EndPointUrl + "/" + productUrl + "/inventory?", RequestType.GET, mark, rawHeaders : header ).ConfigureAwait( false );
+			var result = await InvokeCallAsync< GetMerchantSkusInventoryResponseParser, GetMerchantSkusInventoryResponse >( _endPoint.EndPointUrl + "/" + productUrl + "/inventory?", RequestType.GET, mark, rawHeaders : header, returnDefaultInsteadOfException:true ).ConfigureAwait( false );
 			return result;
 		}
 
@@ -125,7 +125,7 @@ namespace JetAccess.Services
 			}
 		}
 
-		protected async Task< TParsed > InvokeCallAsync< TParser, TParsed >( string partialUrl, RequestType requestType, string mark, string body = null, Dictionary< string, string > rawHeaders = null ) where TParser : IResponseParser< TParsed >, new()
+		protected async Task< TParsed > InvokeCallAsync< TParser, TParsed >( string partialUrl, RequestType requestType, string mark, string body = null, Dictionary< string, string > rawHeaders = null, bool returnDefaultInsteadOfException = false ) where TParser : class, IResponseParser< TParsed >, new()
 		{
 			var res = default( TParsed );
 			try
@@ -150,6 +150,8 @@ namespace JetAccess.Services
 			}
 			catch( Exception exception )
 			{
+				if( returnDefaultInsteadOfException )
+					return default( TParsed );
 				var parameters = string.Format( "{{Url:{0}, Body:{1}, Headers:{2}}}", partialUrl, body ?? PredefinedValues.NotAvailable, rawHeaders.ToJson() );
 				throw new Exception( string.Format( "Exception occured. {0}", this.CreateMethodCallInfo( parameters, mark ) ), exception );
 			}

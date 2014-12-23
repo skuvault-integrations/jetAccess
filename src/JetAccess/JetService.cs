@@ -56,13 +56,14 @@ namespace JetAccess
 			{
 				JetLogger.LogTraceStarted( this.CreateMethodCallInfo( methodParameters, mark ) );
 				var productUrls = await JetRestService.GetProductUrlsAsync().ConfigureAwait( false );
+
 				var products = await productUrls.SkuUrls.ProcessInBatchAsync( _batchSize, async ( x ) =>
 				{
 					var inventory = await JetRestService.GetMerchantSkusInventoryAsync( x ).ConfigureAwait( false );
 					return Tuple.Create( x, inventory );
 				} ).ConfigureAwait( false );
 
-				var res = products.Select( x => Product.From( x.Item2, x.Item1 ) ).ToList();
+				var res = products.Where( x => x.Item2 != null ).Select( x => Product.From( x.Item2, x.Item1 ) ).ToList();
 
 				JetLogger.LogTraceEnded( this.CreateMethodCallInfo( methodParameters, mark, methodResult : res.ToJson() ) );
 
