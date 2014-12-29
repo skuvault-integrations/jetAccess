@@ -48,7 +48,7 @@ namespace JetAccess.Models.Services.JetRestService.PutMerchantSkusInventory
 
 		internal static PutMerchantSkusInventoryRequest From( Inventory o )
 		{
-			var id = o.Id;
+			var id = o.SkuUrl;
 			var inventories = o.Nodes.Select( FulfillmentNode.From ).ToList();
 			var res = new PutMerchantSkusInventoryRequest( id, inventories );
 			return res;

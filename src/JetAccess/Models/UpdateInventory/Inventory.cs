@@ -4,13 +4,13 @@ namespace JetAccess.Models.UpdateInventory
 {
 	public class Inventory
 	{
-		public Inventory( string id, IEnumerable< FulfillmentNode > nodes3 )
+		public Inventory( string skuUrl, IEnumerable< FulfillmentNode > nodes3 )
 		{
-			Id = id;
+			SkuUrl = skuUrl;
 			Nodes = nodes3;
 		}
 
-		public string Id{ get; private set; }
+		public string SkuUrl{ get; private set; }
 		public IEnumerable< FulfillmentNode > Nodes{ get; private set; }
 	}
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using JetAccess.Misc;
 using JetAccess.Models.Services.JetRestService.GetMerchantSkusInventory;
@@ -21,6 +22,20 @@ namespace JetAccess.Models.GetProducts
 		public string SkuUrl{ get; set; }
 
 		public IEnumerable< FullFillmentNode > Nodes{ get; set; }
+
+		public string GetSku()
+		{
+			var from = SkuUrl.LastIndexOf( "/", StringComparison.Ordinal ) + 1;
+			return SkuUrl.Substring( from, SkuUrl.Length - from );
+		}
+
+		public decimal GetQuantity()
+		{
+			if( Nodes == null )
+				return 0;
+
+			return Nodes.Aggregate( 0.0m, ( ac, x ) => ac + x.Quantity, z => z );
+		}
 
 		public string ToJson()
 		{
