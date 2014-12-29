@@ -14,9 +14,19 @@ namespace JetAccess
 			_endPoint = endPoint;
 		}
 
-		public IJetService CreateService( JetUserCredentials userAuthCredentials, EndPoint endPoint )
+		public JetFactory( EndPoint endPoint )
 		{
-			return new JetService( userAuthCredentials, endPoint );
+			_endPoint = endPoint;
+		}
+
+		//public IJetService CreateService( JetUserCredentials userAuthCredentials, EndPoint endPoint )
+		//{
+		//	return new JetService( userAuthCredentials, endPoint );
+		//}
+
+		public IJetService CreateService(JetUserCredentials userAuthCredentials)
+		{
+			return new JetService( userAuthCredentials, _endPoint );
 		}
 	}
 }

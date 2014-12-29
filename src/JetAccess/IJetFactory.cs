@@ -5,6 +5,6 @@ namespace JetAccess
 {
 	public interface IJetFactory
 	{
-		IJetService CreateService( JetUserCredentials userAuthCredentials, EndPoint endPoint );
+		IJetService CreateService( JetUserCredentials userAuthCredentials );
 	}
 }
