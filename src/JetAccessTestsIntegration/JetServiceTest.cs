@@ -28,7 +28,7 @@ namespace JetAccessTestsIntegration
 			var service = new JetService( _testDataReader.GetJetUserCredentials, EndPoint.Test );
 
 			//------------ Act
-			var task = service.Ping();
+			var task = service.PingAsync();
 			task.Wait();
 
 			//------------ Assert

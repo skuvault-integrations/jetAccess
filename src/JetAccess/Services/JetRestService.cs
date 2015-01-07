@@ -50,6 +50,14 @@ namespace JetAccess.Services
 			return result;
 		}
 
+		public GetTokenResponse GetToken()
+		{
+			var mark = Guid.NewGuid().ToString();
+			var body = string.Format( "{{\"user\":\"{0}\",\"pass\":\"{1}\"}}", _userCredentials.ApiUser, _userCredentials.Secret );
+			var result = InvokeCall< GetTokenResponseParser, GetTokenResponse >( _endPoint.EndPointUrl + "/token/", RequestType.POST, mark, body );
+			return result;
+		}
+
 		public async Task< GetOrderUrlsResponse > GetOrderUrlsAsync()
 		{
 			var mark = Guid.NewGuid().ToString();
@@ -86,7 +94,7 @@ namespace JetAccess.Services
 			var mark = Guid.NewGuid().ToString();
 			var token = await GetTokenOrReturnChachedAsync().ConfigureAwait( false );
 			var header = new Dictionary< string, string >() { { "Authorization", token.ToString() } };
-			var result = await InvokeCallAsync< GetMerchantSkusInventoryResponseParser, GetMerchantSkusInventoryResponse >( _endPoint.EndPointUrl + "/" + productUrl + "/inventory?", RequestType.GET, mark, rawHeaders : header, returnDefaultInsteadOfException:true ).ConfigureAwait( false );
+			var result = await InvokeCallAsync< GetMerchantSkusInventoryResponseParser, GetMerchantSkusInventoryResponse >( _endPoint.EndPointUrl + "/" + productUrl + "/inventory?", RequestType.GET, mark, rawHeaders : header, returnDefaultInsteadOfException : true ).ConfigureAwait( false );
 			return result;
 		}
 
@@ -122,6 +130,38 @@ namespace JetAccess.Services
 			private RequestType( string type )
 			{
 				Type = type;
+			}
+		}
+
+		protected TParsed InvokeCall< TParser, TParsed >( string partialUrl, RequestType requestType, string mark, string body = null, Dictionary< string, string > rawHeaders = null, bool returnDefaultInsteadOfException = false ) where TParser : class, IResponseParser< TParsed >, new()
+		{
+			var res = default( TParsed );
+			try
+			{
+				ActionPolicies.Get.Do( async () =>
+				{
+					WebRequest webRequest;
+					if( requestType == RequestType.POST )
+						webRequest = WebRequestServices.CreatePostRequest( partialUrl, body, rawHeaders );
+					else if( requestType == RequestType.GET )
+						webRequest = WebRequestServices.CreateGetRequest( partialUrl, body, rawHeaders );
+					else if( requestType == RequestType.PUT )
+						webRequest = WebRequestServices.CreatePutRequest( partialUrl, body, rawHeaders );
+					else
+						webRequest = WebRequestServices.CreateGetRequest( partialUrl, body, rawHeaders );
+
+					using( var memStream = this.WebRequestServices.GetResponseStream( webRequest ) )
+						res = new TParser().Parse( memStream, false );
+				} );
+
+				return res;
+			}
+			catch( Exception exception )
+			{
+				if( returnDefaultInsteadOfException )
+					return default( TParsed );
+				var parameters = string.Format( "{{Url:{0}, Body:{1}, Headers:{2}}}", partialUrl, body ?? PredefinedValues.NotAvailable, rawHeaders.ToJson() );
+				throw new Exception( string.Format( "Exception occured. {0}", this.CreateMethodCallInfo( parameters, mark ) ), exception );
 			}
 		}
 

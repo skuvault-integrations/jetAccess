@@ -51,9 +51,7 @@ namespace JetAccess
 		{
 			try
 			{
-				var getTokenResponseTask = JetRestService.GetTokenAsync();
-				getTokenResponseTask.Wait();
-				var getTokenResponse = getTokenResponseTask.Result;
+				var getTokenResponse = JetRestService.GetToken();
 
 				var pingInfo = new PingInfo( !string.IsNullOrWhiteSpace( getTokenResponse.TokenInfo.Token ) && !string.IsNullOrWhiteSpace( getTokenResponse.TokenInfo.TokenType ) );
 				return pingInfo;

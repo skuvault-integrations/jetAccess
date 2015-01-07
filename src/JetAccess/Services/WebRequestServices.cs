@@ -17,14 +17,29 @@ namespace JetAccess.Services
 			return await CreateCustomRequestAsync( serviceUrl, body, rawHeaders, WebRequestMethods.Http.Put ).ConfigureAwait( false );
 		}
 
+		public WebRequest CreatePutRequest( string serviceUrl, string body, Dictionary< string, string > rawHeaders )
+		{
+			return CreateCustomRequest( serviceUrl, body, rawHeaders, WebRequestMethods.Http.Put );
+		}
+
 		public async Task< WebRequest > CreateGetRequestAsync( string serviceUrl, string body, Dictionary< string, string > rawHeaders )
 		{
 			return await CreateCustomRequestAsync( serviceUrl, body, rawHeaders, WebRequestMethods.Http.Get ).ConfigureAwait( false );
 		}
 
+		public WebRequest CreateGetRequest( string serviceUrl, string body, Dictionary< string, string > rawHeaders )
+		{
+			return CreateCustomRequest( serviceUrl, body, rawHeaders, WebRequestMethods.Http.Get );
+		}
+
 		public async Task< WebRequest > CreatePostRequestAsync( string serviceUrl, string body, Dictionary< string, string > rawHeaders )
 		{
 			return await CreateCustomRequestAsync( serviceUrl, body, rawHeaders, WebRequestMethods.Http.Post ).ConfigureAwait( false );
+		}
+
+		public WebRequest CreatePostRequest( string serviceUrl, string body, Dictionary< string, string > rawHeaders )
+		{
+			return CreateCustomRequest( serviceUrl, body, rawHeaders, WebRequestMethods.Http.Post );
 		}
 
 		protected async Task< WebRequest > CreateCustomRequestAsync( string serviceUrl, string body, Dictionary< string, string > rawHeaders, string method = WebRequestMethods.Http.Get )
@@ -54,6 +69,45 @@ namespace JetAccess.Services
 				if( encodedBody.Length > 0 )
 				{
 					using( var newStream = await serviceRequest.GetRequestStreamAsync().ConfigureAwait( false ) )
+						newStream.Write( encodedBody, 0, encodedBody.Length );
+				}
+
+				return serviceRequest;
+			}
+			catch( Exception exc )
+			{
+				var methodParameters = string.Format( "{{Url:\'{0}\', Body:\'{1}\', Headers:{2}}}", serviceUrl, body, rawHeaders.ToJson() );
+				throw new Exception( string.Format( "Exception occured. {0}", this.CreateMethodCallInfo( methodParameters ) ), exc );
+			}
+		}
+
+		protected WebRequest CreateCustomRequest( string serviceUrl, string body, Dictionary< string, string > rawHeaders, string method = WebRequestMethods.Http.Get )
+		{
+			try
+			{
+				if( rawHeaders == null )
+					rawHeaders = new Dictionary< string, string >();
+
+				if( body == null )
+					body = string.Empty;
+
+				var encoding = new UTF8Encoding();
+				var encodedBody = encoding.GetBytes( body );
+
+				var serviceRequest = ( HttpWebRequest )WebRequest.Create( serviceUrl );
+				serviceRequest.Method = method;
+				serviceRequest.ContentType = "application/json";
+				serviceRequest.ContentLength = encodedBody.Length;
+				serviceRequest.KeepAlive = true;
+
+				foreach( var rawHeadersKey in rawHeaders.Keys )
+				{
+					serviceRequest.Headers.Add( rawHeadersKey, rawHeaders[ rawHeadersKey ] );
+				}
+
+				if( encodedBody.Length > 0 )
+				{
+					using( var newStream = serviceRequest.GetRequestStream() )
 						newStream.Write( encodedBody, 0, encodedBody.Length );
 				}
 

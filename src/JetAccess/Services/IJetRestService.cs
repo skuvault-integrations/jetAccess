@@ -13,6 +13,7 @@ namespace JetAccess.Services
 	{
 		Task< TokenInfo > GetTokenOrReturnChachedAsync();
 		Task< GetTokenResponse > GetTokenAsync();
+		GetTokenResponse GetToken();
 		Task< GetOrderUrlsResponse > GetOrderUrlsAsync();
 		Task< GetOrderWithoutShipmentDetailResponse > GetOrderWithoutShipmentDetailAsync( string orderUrl );
 		Task< GetProductUrlsResponse > GetProductUrlsAsync();
