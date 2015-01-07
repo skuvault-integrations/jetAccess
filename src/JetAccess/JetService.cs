@@ -31,11 +31,30 @@ namespace JetAccess
 
 		public Func< string > AdditionalLogInfo{ get; set; }
 
-		public async Task< PingInfo > Ping()
+		public async Task< PingInfo > PingAsync()
 		{
 			try
 			{
 				var getTokenResponse = await JetRestService.GetTokenAsync().ConfigureAwait( false );
+				var pingInfo = new PingInfo( !string.IsNullOrWhiteSpace( getTokenResponse.TokenInfo.Token ) && !string.IsNullOrWhiteSpace( getTokenResponse.TokenInfo.TokenType ) );
+				return pingInfo;
+			}
+			catch( Exception exception )
+			{
+				var jetException = new JetException( this.CreateMethodCallInfo(), exception );
+				JetLogger.LogTraceException( jetException );
+				throw jetException;
+			}
+		}
+
+		public PingInfo Ping()
+		{
+			try
+			{
+				var getTokenResponseTask = JetRestService.GetTokenAsync();
+				getTokenResponseTask.Wait();
+				var getTokenResponse = getTokenResponseTask.Result;
+
 				var pingInfo = new PingInfo( !string.IsNullOrWhiteSpace( getTokenResponse.TokenInfo.Token ) && !string.IsNullOrWhiteSpace( getTokenResponse.TokenInfo.TokenType ) );
 				return pingInfo;
 			}
