@@ -138,7 +138,7 @@ namespace JetAccess.Services
 			var res = default( TParsed );
 			try
 			{
-				ActionPolicies.Get.Do( async () =>
+				ActionPolicies.Get.Do( () =>
 				{
 					WebRequest webRequest;
 					if( requestType == RequestType.POST )
