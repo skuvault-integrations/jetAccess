@@ -16,6 +16,7 @@ namespace JetAccess.Models.GetOrders
 			{
 				Created = getOrderWithoutShipmentDetailResponse.Created,
 				FulFillmentNode = getOrderWithoutShipmentDetailResponse.FulFillmentNode,
+				HasShipments = getOrderWithoutShipmentDetailResponse.HasShipments,
 				MerchantOrderId = getOrderWithoutShipmentDetailResponse.MerchantOrderId,
 				OrderPlacedDate = getOrderWithoutShipmentDetailResponse.OrderPlacedDate,
 				OrderTransmitionDate = getOrderWithoutShipmentDetailResponse.OrderTransmitionDate,
@@ -42,6 +43,19 @@ namespace JetAccess.Models.GetOrders
 			return order;
 		}
 
+		public OrderStatus GetOrderStatus()
+		{
+			if( this.HasShipments )
+				return OrderStatus.Shipped;
+
+			if( !this.HasShipments )
+				return OrderStatus.Pending;
+
+			return OrderStatus.Unknown;
+		}
+
+		public bool HasShipments{ get; set; }
+
 		public IEnumerable< OrderLineItem > OrderItems{ get; set; }
 
 		public string ReferenceOrderId{ get; set; }
@@ -60,6 +74,13 @@ namespace JetAccess.Models.GetOrders
 		{
 			return string.Format( "{{MerchantOrderId:\"{0}\", Created:\"{1}\", RequestOrderQuantity:\"{2}\"}}", this.MerchantOrderId, this.Created, this.OrderItems.ToJson() );
 		}
+	}
+
+	public enum OrderStatus
+	{
+		Unknown,
+		Shipped,
+		Pending
 	}
 
 	public class OrderLineItem: IJsonSerializable

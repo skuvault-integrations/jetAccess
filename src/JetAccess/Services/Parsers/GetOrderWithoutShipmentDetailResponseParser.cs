@@ -14,6 +14,7 @@ namespace JetAccess.Services.Parsers
 			public string merchant_order_id;
 			public string reference_order_id;
 			public string fulfillment_node;
+			public bool has_shipments;
 			public DateTime order_placed_date;
 			public DateTime order_transmission_date;
 			public string status;
@@ -47,6 +48,7 @@ namespace JetAccess.Services.Parsers
 					MerchantOrderId = deserializeObject.merchant_order_id,
 					ReferenceOrderId = deserializeObject.reference_order_id,
 					FulFillmentNode = deserializeObject.fulfillment_node,
+					HasShipments = deserializeObject.has_shipments,
 					OrderPlacedDate = deserializeObject.order_placed_date,
 					OrderTransmitionDate = deserializeObject.order_transmission_date,
 					Created = deserializeObject.status,

@@ -12,6 +12,7 @@ namespace JetAccess.Models.Services.JetRestService.GetOrderWithOutShipmentDetail
 		public DateTime OrderTransmitionDate{ get; set; }
 		public string Created{ get; set; }
 		public IEnumerable< OrderItem > OrderItems{ get; set; }
+		public bool HasShipments{ get; set; }
 	}
 
 	internal class OrderItem
