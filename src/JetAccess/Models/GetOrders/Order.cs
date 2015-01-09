@@ -14,7 +14,7 @@ namespace JetAccess.Models.GetOrders
 		{
 			var order = new Order
 			{
-				Created = getOrderWithoutShipmentDetailResponse.Created,
+				Status = getOrderWithoutShipmentDetailResponse.Status,
 				FulFillmentNode = getOrderWithoutShipmentDetailResponse.FulFillmentNode,
 				HasShipments = getOrderWithoutShipmentDetailResponse.HasShipments,
 				MerchantOrderId = getOrderWithoutShipmentDetailResponse.MerchantOrderId,
@@ -31,7 +31,7 @@ namespace JetAccess.Models.GetOrders
 		{
 			var order = new Order
 			{
-				Created = getOrderWithoutShipmentDetailResponse.Created,
+				Status = getOrderWithoutShipmentDetailResponse.Created,
 				FulFillmentNode = getOrderWithoutShipmentDetailResponse.FulFillmentNode,
 				MerchantOrderId = getOrderWithoutShipmentDetailResponse.MerchantOrderId,
 				OrderPlacedDate = getOrderWithoutShipmentDetailResponse.OrderPlacedDate,
@@ -68,11 +68,11 @@ namespace JetAccess.Models.GetOrders
 
 		public string FulFillmentNode{ get; set; }
 
-		public string Created{ get; set; }
+		public string Status{ get; set; }
 
 		public string ToJson()
 		{
-			return string.Format( "{{MerchantOrderId:\"{0}\", Created:\"{1}\", RequestOrderQuantity:\"{2}\"}}", this.MerchantOrderId, this.Created, this.OrderItems.ToJson() );
+			return string.Format( "{{MerchantOrderId:\"{0}\", Status:\"{1}\", RequestOrderQuantity:\"{2}\"}}", this.MerchantOrderId, this.Status, this.OrderItems.ToJson() );
 		}
 	}
 

@@ -10,7 +10,7 @@ namespace JetAccess.Models.Services.JetRestService.GetOrderWithOutShipmentDetail
 		public string FulFillmentNode{ get; set; }
 		public DateTime OrderPlacedDate{ get; set; }
 		public DateTime OrderTransmitionDate{ get; set; }
-		public string Created{ get; set; }
+		public string Status{ get; set; }
 		public IEnumerable< OrderItem > OrderItems{ get; set; }
 		public bool HasShipments{ get; set; }
 	}
