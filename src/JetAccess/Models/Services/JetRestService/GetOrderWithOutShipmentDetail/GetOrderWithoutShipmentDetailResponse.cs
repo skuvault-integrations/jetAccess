@@ -13,6 +13,11 @@ namespace JetAccess.Models.Services.JetRestService.GetOrderWithOutShipmentDetail
 		public string Status{ get; set; }
 		public IEnumerable< OrderItem > OrderItems{ get; set; }
 		public bool HasShipments{ get; set; }
+		public string ShippingToAddress1{ get; set; }
+		public string ShippingToAddress2{ get; set; }
+		public string ShippingToCity{ get; set; }
+		public string ShippingToSate{ get; set; }
+		public string ShippingToZipCode{ get; set; }
 	}
 
 	internal class OrderItem

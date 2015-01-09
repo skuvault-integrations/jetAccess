@@ -15,6 +15,11 @@ namespace JetAccess.Models.GetOrders
 			var order = new Order
 			{
 				Status = getOrderWithoutShipmentDetailResponse.Status,
+				ShippingToAddress1 = getOrderWithoutShipmentDetailResponse.ShippingToAddress1,
+				ShippingToAddress2 = getOrderWithoutShipmentDetailResponse.ShippingToAddress2,
+				ShippingToCity = getOrderWithoutShipmentDetailResponse.ShippingToCity,
+				ShippingToSate = getOrderWithoutShipmentDetailResponse.ShippingToSate,
+				ShippingToZipCode = getOrderWithoutShipmentDetailResponse.ShippingToZipCode,
 				FulFillmentNode = getOrderWithoutShipmentDetailResponse.FulFillmentNode,
 				HasShipments = getOrderWithoutShipmentDetailResponse.HasShipments,
 				MerchantOrderId = getOrderWithoutShipmentDetailResponse.MerchantOrderId,
@@ -53,6 +58,16 @@ namespace JetAccess.Models.GetOrders
 
 			return OrderStatus.Unknown;
 		}
+
+		public string ShippingToZipCode{ get; set; }
+
+		public string ShippingToSate{ get; set; }
+
+		public string ShippingToCity{ get; set; }
+
+		public string ShippingToAddress2{ get; set; }
+
+		public string ShippingToAddress1{ get; set; }
 
 		public bool HasShipments{ get; set; }
 

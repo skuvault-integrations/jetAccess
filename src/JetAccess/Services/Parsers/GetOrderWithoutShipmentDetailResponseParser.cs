@@ -19,6 +19,28 @@ namespace JetAccess.Services.Parsers
 			public DateTime order_transmission_date;
 			public string status;
 			public OrderItem[] order_items;
+			public ShippingTo shipping_to;
+		}
+
+		private class ShippingTo
+		{
+			public Address address;
+			public Recipient recipient;
+		}
+
+		private class Address
+		{
+			public string address1;
+			public string address2;
+			public string city;
+			public string state;
+			public string zip_code;
+		}
+
+		private class Recipient
+		{
+			public string name;
+			public string phone_number;
 		}
 
 		private class OrderItem
@@ -51,7 +73,12 @@ namespace JetAccess.Services.Parsers
 					HasShipments = deserializeObject.has_shipments,
 					OrderPlacedDate = deserializeObject.order_placed_date,
 					OrderTransmitionDate = deserializeObject.order_transmission_date,
-					Created = deserializeObject.status,
+					Status = deserializeObject.status,
+					ShippingToAddress1 = deserializeObject.shipping_to.address.address1,
+					ShippingToAddress2 = deserializeObject.shipping_to.address.address1,
+					ShippingToCity = deserializeObject.shipping_to.address.city,
+					ShippingToSate = deserializeObject.shipping_to.address.state,
+					ShippingToZipCode = deserializeObject.shipping_to.address.zip_code,
 					OrderItems = new List< Models.Services.JetRestService.GetOrderWithOutShipmentDetail.OrderItem >(),
 				};
 
