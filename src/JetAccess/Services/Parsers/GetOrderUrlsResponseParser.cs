@@ -8,7 +8,9 @@ namespace JetAccess.Services.Parsers
 	{
 		private class ServerResponse
 		{
+#pragma warning disable 0649
 			public string[] order_urls;
+#pragma warning restore 0649
 		}
 
 		public override GetOrderUrlsResponse Parse( Stream stream, bool keepStreamPos = true )

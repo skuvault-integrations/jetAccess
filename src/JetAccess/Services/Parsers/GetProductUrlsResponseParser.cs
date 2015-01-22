@@ -9,7 +9,9 @@ namespace JetAccess.Services
 	{
 		private class ServerResponse
 		{
+#pragma warning disable 0649
 			public string[] sku_urls;
+#pragma warning restore 0649
 		}
 
 		public override GetProductUrlsResponse Parse( Stream stream, bool keepStreamPos = true )

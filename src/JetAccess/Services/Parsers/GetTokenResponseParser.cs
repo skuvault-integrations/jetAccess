@@ -8,8 +8,10 @@ namespace JetAccess.Services.Parsers
 	{
 		private class ServerResponse
 		{
+#pragma warning disable 0649
 			public string id_token;
 			public string token_type;
+#pragma warning disable 0649
 		}
 
 		public override GetTokenResponse Parse( Stream stream, bool keepStreamPos = true )

@@ -11,6 +11,7 @@ namespace JetAccess.Services.Parsers
 	{
 		private class ServerResponse
 		{
+#pragma warning disable 0649
 			public string merchant_order_id;
 			public string reference_order_id;
 			public string fulfillment_node;
@@ -18,24 +19,29 @@ namespace JetAccess.Services.Parsers
 			public DateTime order_transmission_date;
 			public string status;
 			public OrderItem[] order_items;
+#pragma warning restore 0649
 		}
 
 		private class OrderItem
 		{
+#pragma warning disable 0649
 			public string order_item_id;
 			public string merchant_sku;
 			public decimal request_order_quantity;
 			public item_price item_price;
 			public string product_title;
 			public string url;
+#pragma warning restore 0649
 		}
 
 		private class item_price
 		{
+#pragma warning disable 0649
 			public decimal base_price;
 			public decimal item_tax;
 			public decimal item_shipping_cost;
 			public decimal item_shipping_tax;
+#pragma warning restore 0649
 		}
 
 		private static class OrderConverter

@@ -9,13 +9,17 @@ namespace JetAccess.Services.Parsers
 	{
 		private class fulfillment_node
 		{
+#pragma warning disable 0649
 			public string fulfillment_node_id;
 			public decimal quantity;
+#pragma warning restore 0649
 		}
 
 		private class ServerResponse
 		{
+#pragma warning disable 0649
 			public fulfillment_node[] fulfillment_nodes;
+#pragma warning restore 0649
 		}
 
 		public override GetMerchantSkusInventoryResponse Parse( Stream stream, bool keepStreamPos = true )
