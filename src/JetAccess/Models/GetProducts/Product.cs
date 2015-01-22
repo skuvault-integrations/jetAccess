@@ -19,14 +19,21 @@ namespace JetAccess.Models.GetProducts
 			return product;
 		}
 
-		public string SkuUrl{ get; set; }
+		public string SkuUrl{ get; private set; }
 
 		public IEnumerable< FullFillmentNode > Nodes{ get; set; }
 
 		public string GetSku()
 		{
-			var from = SkuUrl.LastIndexOf( "/", StringComparison.Ordinal ) + 1;
-			return SkuUrl.Substring( from, SkuUrl.Length - from );
+			try
+			{
+				var from = SkuUrl.LastIndexOf( "/", StringComparison.Ordinal ) + 1;
+				return SkuUrl.Substring( from, SkuUrl.Length - from );
+			}
+			catch( Exception )
+			{
+				return null;
+			}
 		}
 
 		public decimal GetQuantity()
