@@ -9,7 +9,10 @@ namespace JetAccessTests.TestEnvironment
 		private readonly string _appKeysFilePath;
 		private FlatCsvLineAppKeys _flatCsvLineAppKeys;
 
-		public JetUserCredentials GetJetUserCredentials => new JetUserCredentials( this._flatCsvLineAppKeys.ApiUser, this._flatCsvLineAppKeys.Secret );
+		public JetUserCredentials GetJetUserCredentials
+		{
+			get { return new JetUserCredentials( this._flatCsvLineAppKeys.ApiUser, this._flatCsvLineAppKeys.Secret ); }
+		}
 
 		public TestDataReader( string appKeysFilePath )
 		{
