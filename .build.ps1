@@ -25,7 +25,7 @@ $solution_file = "$src_dir\$($project_name).sln"
 use Framework\v4.0.30319 MSBuild
 
 task Clean { 
-	exec { MSBuild "$solution_file" /t:Clean /p:Configuration=Release /v:quiet } 
+	exec { MSBuild "$solution_file" /t:Clean /p:Configuration=Release /p:Platform="Any CPU" /v:quiet } 
 	Remove-Item -force -recurse $build_dir -ErrorAction SilentlyContinue | Out-Null
 }
 
@@ -36,7 +36,7 @@ task Init Clean, {
 }
 
 task Build {
-	exec { MSBuild "$solution_file" /t:Build /p:Configuration=Release /v:minimal /p:OutDir="$build_artifacts_dir\" }
+	exec { MSBuild "$solution_file" /t:Build /p:Configuration=Release /p:Platform="Any CPU" /v:minimal /p:OutDir="$build_artifacts_dir\" }
 }
 
 task Package  {
@@ -81,15 +81,15 @@ task NuGet Package, Version, {
 		<projectUrl>https://github.com/agileharbor/$project_name</projectUrl>
 		<licenseUrl>https://raw.github.com/agileharbor/$project_name/master/License.txt</licenseUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
-		<copyright>Copyright (C) Agile Harbor, LLC 2014</copyright>
+		<copyright>Copyright (C) Agile Harbor, LLC</copyright>
 		<summary>$text</summary>
 		<description>$text</description>
 		<tags>$project_short_name</tags>
 		<dependencies> 
 			<group targetFramework="net45">
-				<dependency id="Netco" version="1.4.3" />
+				<dependency id="Netco" version="1.5.1" />
 				<dependency id="CuttingEdge.Conditions" version="1.2.0.0" />
-				<!--<dependency id="DotNetOpenAuth.OAuth.Consumer" version="4.3.4.13329" />-->
+				<dependency id="Newtonsoft.Json" version="7.0.1" />
 			</group>
 		</dependencies>
 	</metadata>
@@ -103,7 +103,7 @@ task NuGet Package, Version, {
 	$push_project = Read-Host "Push $($project_name) " $Version " to NuGet? (Y/N)"
 	Write-Host $push_project
 	if( $push_project -eq "y" -or $push_project -eq "Y" )	{
-		Get-ChildItem $build_dir\*.nupkg |% { exec { & $nuget push  $_.FullName }}
+		Get-ChildItem $build_dir\*.nupkg |% { exec { & $nuget push  $_.FullName -Source nuget.org }}
 	}
 }
 

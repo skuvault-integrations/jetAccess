@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 // COM, set the ComVisible attribute to true on that type.
 
 [ assembly : InternalsVisibleTo( "JetAccessTests" ) ]
-[ assembly : InternalsVisibleTo( "JetAccessTestsIntegration" ) ]
+[ assembly : InternalsVisibleTo( "JetAccessTests" ) ]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 
