@@ -104,7 +104,7 @@ namespace JetAccess.Services
 			var token = await GetTokenOrReturnChachedAsync().ConfigureAwait( false );
 			var header = new Dictionary< string, string >() { { "Authorization", token.ToString() } };
 			var body2 = putMerchantSkusInventoryRequest.ToJson();
-			var result = await InvokeCallAsync< PutMerchantSkusInventoryResponseParser, PutMerchantSkusInventoryResponse >( _endPoint.EndPointUrl + "/" + putMerchantSkusInventoryRequest.Id + "/inventory?", RequestType.PUT, mark, body : body2, rawHeaders : header ).ConfigureAwait( false );
+			var result = await InvokeCallAsync< PutMerchantSkusInventoryResponseParser, PutMerchantSkusInventoryResponse >( _endPoint.EndPointUrl + "/" + "merchant-skus" + "/" + putMerchantSkusInventoryRequest.Id + "/inventory?", RequestType.PUT, mark, body : body2, rawHeaders : header ).ConfigureAwait( false );
 			return result;
 		}
 
@@ -200,7 +200,7 @@ namespace JetAccess.Services
 
 	public sealed class EndPoint
 	{
-		public static EndPoint Test = new EndPoint( "https://merchant-api.test.jet.com/api" );
+		public static EndPoint Test = new EndPoint( "https://merchant-api.jet.com/api" );
 		public static EndPoint Production = new EndPoint( "https://merchant-api.jet.com/api" );
 
 		public String EndPointUrl{ get; private set; }

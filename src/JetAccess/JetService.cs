@@ -76,8 +76,15 @@ namespace JetAccess
 
 				var products = await productUrls.SkuUrls.ProcessInBatchAsync( _batchSize, async ( x ) =>
 				{
-					var inventory = await JetRestService.GetMerchantSkusInventoryAsync( x ).ConfigureAwait( false );
-					return Tuple.Create( x, inventory );
+					try
+					{
+						var inventory = await JetRestService.GetMerchantSkusInventoryAsync(x).ConfigureAwait(false);
+						return Tuple.Create(x, inventory);
+					}
+					catch
+					{
+						return null;
+					}
 				} ).ConfigureAwait( false );
 
 				var res = products.Where( x => x.Item2 != null ).Select( x => Product.From( x.Item2, x.Item1 ) ).ToList();
