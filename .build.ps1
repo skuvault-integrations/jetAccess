@@ -90,6 +90,7 @@ task NuGet Package, Version, {
 				<dependency id="Netco" version="1.5.1" />
 				<dependency id="CuttingEdge.Conditions" version="1.2.0.0" />
 				<dependency id="Newtonsoft.Json" version="7.0.1" />
+				<dependency id="LINQtoCSV" version="1.5.0.0" />
 			</group>
 		</dependencies>
 	</metadata>
