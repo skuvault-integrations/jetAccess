@@ -67,9 +67,9 @@ namespace JetAccess.Services.Parsers
 		{
 #pragma warning disable 0649
 			public decimal base_price;
-			public decimal item_tax;
-			public decimal item_shipping_cost;
-			public decimal item_shipping_tax;
+			public decimal? item_tax;
+			public decimal? item_shipping_cost;
+			public decimal? item_shipping_tax;
 #pragma warning restore 0649
 		}
 
@@ -104,9 +104,9 @@ namespace JetAccess.Services.Parsers
 						ProductTitle = deserializeObject.order_items[ i ].product_title,
 						Url = deserializeObject.order_items[ i ].url,
 						BasePrice = deserializeObject.order_items[ i ].item_price.base_price,
-						ItemShippingCost = deserializeObject.order_items[ i ].item_price.item_shipping_cost,
-						ItemShippingTax = deserializeObject.order_items[ i ].item_price.item_shipping_tax,
-						ItemTax = deserializeObject.order_items[ i ].item_price.item_tax,
+						ItemShippingCost = deserializeObject.order_items[ i ].item_price.item_shipping_cost ?? 0,
+						ItemShippingTax = deserializeObject.order_items[ i ].item_price.item_shipping_tax ?? 0,
+						ItemTax = deserializeObject.order_items[ i ].item_price.item_tax ?? 0,
 					};
 
 					( ( List< Models.Services.JetRestService.GetOrderWithOutShipmentDetail.OrderItem > )res.OrderItems ).Add( item );
