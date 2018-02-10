@@ -27,12 +27,12 @@ namespace JetAccess.Models.Services.JetRestService.PutMerchantSkusInventory
 		}
 	}
 
-	internal class PutMerchantSkusInventoryRequest
+	internal class PatchMerchantSkusInventoryRequest
 	{
 		public IEnumerable< FulfillmentNode > FulfillmentNodes{ get; private set; }
 		public string Id{ get; private set; }
 
-		public PutMerchantSkusInventoryRequest( string id, IEnumerable< FulfillmentNode > nodes )
+		public PatchMerchantSkusInventoryRequest( string id, IEnumerable< FulfillmentNode > nodes )
 		{
 			Id = id;
 			FulfillmentNodes = nodes;
@@ -46,11 +46,11 @@ namespace JetAccess.Models.Services.JetRestService.PutMerchantSkusInventory
 			return obj;
 		}
 
-		internal static PutMerchantSkusInventoryRequest From( Inventory o )
+		internal static PatchMerchantSkusInventoryRequest From( Inventory o )
 		{
 			var id = o.SkuUrl;
 			var inventories = o.Nodes.Select( FulfillmentNode.From ).ToList();
-			var res = new PutMerchantSkusInventoryRequest( id, inventories );
+			var res = new PatchMerchantSkusInventoryRequest( id, inventories );
 			return res;
 		}
 	}

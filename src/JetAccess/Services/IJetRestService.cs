@@ -18,7 +18,7 @@ namespace JetAccess.Services
 		Task< GetOrderWithoutShipmentDetailResponse > GetOrderWithoutShipmentDetailAsync( string orderUrl );
 		Task< GetProductUrlsResponse > GetProductUrlsAsync();
 		Task< GetMerchantSkusInventoryResponse > GetMerchantSkusInventoryAsync( string productUrl );
-		Task< PutMerchantSkusInventoryResponse > PutMerchantSkusInventoryAsync( PutMerchantSkusInventoryRequest putMerchantSkusInventoryRequest );
+		Task< PatchMerchantSkusInventoryResponse > PatchMerchantSkusInventoryAsync( PatchMerchantSkusInventoryRequest patchMerchantSkusInventoryRequest );
 		Task< GetOrderWithShipmentDetailResponse > GetOrderWithShipmentDetailAsync( string s );
 	}
 }

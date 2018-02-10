@@ -109,7 +109,7 @@ namespace JetAccess
 			{
 				JetLogger.LogTraceStarted( this.CreateMethodCallInfo( methodParameters, mark ) );
 
-				var updateResponse = await products.ProcessInBatchAsync( _batchSize, async x => await JetRestService.PutMerchantSkusInventoryAsync( PutMerchantSkusInventoryRequest.From( x ) ).ConfigureAwait( false ) ).ConfigureAwait( false );
+				var updateResponse = await products.ProcessInBatchAsync( _batchSize, async x => await JetRestService.PatchMerchantSkusInventoryAsync( PatchMerchantSkusInventoryRequest.From( x ) ).ConfigureAwait( false ) ).ConfigureAwait( false );
 
 				JetLogger.LogTraceEnded( this.CreateMethodCallInfo( methodParameters, mark, methodResult : PredefinedValues.NotAvailable ) );
 			}

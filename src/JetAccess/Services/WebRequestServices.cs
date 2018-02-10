@@ -22,6 +22,16 @@ namespace JetAccess.Services
 			return CreateCustomRequest( serviceUrl, body, rawHeaders, WebRequestMethods.Http.Put );
 		}
 
+		public async Task< WebRequest > CreatePatchRequestAsync( string serviceUrl, string body, Dictionary< string, string > rawHeaders )
+		{
+			return await this.CreateCustomRequestAsync( serviceUrl, body, rawHeaders, "PATCH" ).ConfigureAwait( false );
+		}
+
+		public WebRequest CreatePatchRequest( string serviceUrl, string body, Dictionary< string, string > rawHeaders )
+		{
+			return this.CreateCustomRequest( serviceUrl, body, rawHeaders, "PATCH" );
+		}
+
 		public async Task< WebRequest > CreateGetRequestAsync( string serviceUrl, string body, Dictionary< string, string > rawHeaders )
 		{
 			return await CreateCustomRequestAsync( serviceUrl, body, rawHeaders, WebRequestMethods.Http.Get ).ConfigureAwait( false );

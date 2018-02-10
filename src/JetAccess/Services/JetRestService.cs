@@ -98,13 +98,13 @@ namespace JetAccess.Services
 			return result;
 		}
 
-		public async Task< PutMerchantSkusInventoryResponse > PutMerchantSkusInventoryAsync( PutMerchantSkusInventoryRequest putMerchantSkusInventoryRequest )
+		public async Task< PatchMerchantSkusInventoryResponse > PatchMerchantSkusInventoryAsync( PatchMerchantSkusInventoryRequest putMerchantSkusInventoryRequest )
 		{
 			var mark = Guid.NewGuid().ToString();
-			var token = await GetTokenOrReturnChachedAsync().ConfigureAwait( false );
-			var header = new Dictionary< string, string >() { { "Authorization", token.ToString() } };
+			var token = await this.GetTokenOrReturnChachedAsync().ConfigureAwait( false );
+			var header = new Dictionary< string, string > { { "Authorization", token.ToString() } };
 			var body2 = putMerchantSkusInventoryRequest.ToJson();
-			var result = await InvokeCallAsync< PutMerchantSkusInventoryResponseParser, PutMerchantSkusInventoryResponse >( _endPoint.EndPointUrl + "/" + "merchant-skus" + "/" + putMerchantSkusInventoryRequest.Id + "/inventory?", RequestType.PUT, mark, body : body2, rawHeaders : header ).ConfigureAwait( false );
+			var result = await this.InvokeCallAsync< PatchMerchantSkusInventoryResponseParser, PatchMerchantSkusInventoryResponse >( this._endPoint.EndPointUrl + "/" + "merchant-skus" + "/" + putMerchantSkusInventoryRequest.Id + "/inventory?", RequestType.PATCH, mark, body2, header ).ConfigureAwait( false );
 			return result;
 		}
 
@@ -124,6 +124,7 @@ namespace JetAccess.Services
 			public static RequestType GET = new RequestType( "GET" );
 			public static RequestType POST = new RequestType( "POST" );
 			public static RequestType PUT = new RequestType( "PUT" );
+			public static RequestType PATCH = new RequestType( "PATCH" );
 
 			public String Type{ get; private set; }
 
@@ -147,6 +148,8 @@ namespace JetAccess.Services
 						webRequest = WebRequestServices.CreateGetRequest( partialUrl, body, rawHeaders );
 					else if( requestType == RequestType.PUT )
 						webRequest = WebRequestServices.CreatePutRequest( partialUrl, body, rawHeaders );
+					else if( requestType == RequestType.PATCH )
+						webRequest = this.WebRequestServices.CreatePatchRequest( partialUrl, body, rawHeaders );
 					else
 						webRequest = WebRequestServices.CreateGetRequest( partialUrl, body, rawHeaders );
 
@@ -179,6 +182,8 @@ namespace JetAccess.Services
 						webRequest = await WebRequestServices.CreateGetRequestAsync( partialUrl, body, rawHeaders ).ConfigureAwait( false );
 					else if( requestType == RequestType.PUT )
 						webRequest = await WebRequestServices.CreatePutRequestAsync( partialUrl, body, rawHeaders ).ConfigureAwait( false );
+					else if( requestType == RequestType.PATCH )
+						webRequest = await this.WebRequestServices.CreatePatchRequestAsync( partialUrl, body, rawHeaders ).ConfigureAwait( false );
 					else
 						webRequest = await WebRequestServices.CreateGetRequestAsync( partialUrl, body, rawHeaders ).ConfigureAwait( false );
 
