@@ -103,7 +103,7 @@ namespace JetAccess
 
 		public async Task UpdateInventoryAsync( IEnumerable< Inventory > products )
 		{
-			string methodParameters = string.Format( "{{products:{0}}}", "products.ToJson()" );
+			string methodParameters = string.Format( "{{products:{0}}}", products.ToJson() );
 			string mark = Guid.NewGuid().ToString();
 			try
 			{
